@@ -34,7 +34,7 @@
                                     <a href="#">
                                         <div class="pull-left">
                                             <!-- User Image -->
-                                            <img src="/img/user-icon160x160.jpg" class="img-circle" alt="User Image"/>
+                                            <img src="assets/img/user-icon160x160.jpg" class="img-circle" alt="User Image"/>
                                         </div>
                                         <!-- Message title and timestamp -->
                                         <h4>
@@ -56,18 +56,20 @@
                     <!-- Menu toggle button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning">10</span>
+                        <span class="label label-warning">{{ $count }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="header">{{ trans('adminlte_lang::message.notifications') }}</li>
                         <li>
                             <!-- Inner Menu: contains the notifications -->
                             <ul class="menu">
+                                @foreach ($view as $row)
                                 <li><!-- start notification -->
                                     <a href="#">
-                                        <i class="fa fa-users text-aqua"></i> {{ trans('adminlte_lang::message.newmembers') }}
+                                        <i class="fa fa-users text-aqua"></i>Someone shared {{ $row->name }} to you
                                     </a>
                                 </li><!-- end notification -->
+                                @endforeach
                             </ul>
                         </li>
                         <li class="footer"><a href="#">{{ trans('adminlte_lang::message.viewall') }}</a></li>
@@ -117,14 +119,14 @@
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="{{asset('/img/user-icon160x160.jpg')}}" class="user-image" alt="User Image"/>
+                            <img src="{{asset('assets/img/user-160x160.jpg')}}" class="user-image" alt="User Image"/>
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">{{ Auth::user()->name }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="{{asset('/img/user-icon160x160.jpg')}}" class="img-circle" alt="User Image" />
+                                <img src="{{asset('assets/img/user-icon160x160.jpg')}}" class="img-circle" alt="User Image" />
                                 <p>
                                     {{ Auth::user()->name }}
                                     <small>{{ trans('adminlte_lang::message.login') }} Nov. 2012</small>

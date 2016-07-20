@@ -12,11 +12,13 @@
 */
 
 Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/home', function () {
     return view('home');
 });
 
-Route::get('/publish_POB', function() {
-	return view('publish_POB');
-});
-
 Route::get('/publish_POB', 'HomeController@publish');
+Route::get('/send_POB', 'HomeController@send');
+

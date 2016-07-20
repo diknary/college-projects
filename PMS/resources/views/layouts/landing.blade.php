@@ -26,16 +26,16 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     <title>{{ trans('adminlte_lang::message.landingdescriptionpratt') }}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{{ asset('/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{{ asset('/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
 
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
 
-    <script src="{{ asset('/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
-    <script src="{{ asset('/js/smoothscroll.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+    <script src="{{ asset('assets/js/smoothscroll.js') }}"></script>
 
 
 </head>
@@ -65,7 +65,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                     <li><a href="{{ url('/login') }}">{{ trans('adminlte_lang::message.login') }}</a></li>
                     <li><a href="{{ url('/register') }}">{{ trans('adminlte_lang::message.register') }}</a></li>
                 @else
-                    <li><a href="/home">{{ Auth::user()->name }}</a></li>
+                    <li><a href="{{ url('home') }}">{{ Auth::user()->name }}</a></li>
                 @endif
             </ul>
         </div><!--/.nav-collapse -->
@@ -87,14 +87,14 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
             <div class="col-lg-2">
                 <h5>{{ trans('adminlte_lang::message.amazing') }}</h5>
                 <p>{{ trans('adminlte_lang::message.basedadminlte') }}</p>
-                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/img/arrow1.png') }}">
+                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('assets/img/arrow1.png') }}">
             </div>
             <div class="col-lg-8">
-                <img class="img-responsive" src="{{ asset('/img/app-bg.png') }}" alt="">
+                <img class="img-responsive" src="{{ asset('assets/img/app-bg.png') }}" alt="">
             </div>
             <div class="col-lg-2">
                 <br>
-                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/img/arrow2.png') }}">
+                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('assets/img/arrow2.png') }}">
                 <h5>{{ trans('adminlte_lang::message.awesomepackaged') }}</h5>
                 <p>... {{ trans('adminlte_lang::message.by') }} <a href="http://acacha.org/sergitur">Sergi Tur Badenas</a> {{ trans('adminlte_lang::message.at') }} <a href="http://acacha.org">acacha.org</a> {{ trans('adminlte_lang::message.readytouse') }}</p>
             </div>
@@ -112,17 +112,17 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
             <br>
             <br>
             <div class="col-lg-4">
-                <img src="{{ asset('/img/intro01.png') }}" alt="">
+                <img src="{{ asset('assets/img/intro01.png') }}" alt="">
                 <h3>{{ trans('adminlte_lang::message.community') }}</h3>
                 <p>{{ trans('adminlte_lang::message.see') }} <a href="https://github.com/acacha/adminlte-laravel">{{ trans('adminlte_lang::message.githubproject') }}</a>, {{ trans('adminlte_lang::message.post') }} <a href="https://github.com/acacha/adminlte-laravel/issues">{{ trans('adminlte_lang::message.issues') }}</a> {{ trans('adminlte_lang::message.and') }} <a href="https://github.com/acacha/adminlte-laravel/pulls">{{ trans('adminlte_lang::message.pullrequests') }}</a></p>
             </div>
             <div class="col-lg-4">
-                <img src="{{ asset('/img/intro02.png') }}" alt="">
+                <img src="{{ asset('assets/img/intro02.png') }}" alt="">
                 <h3>{{ trans('adminlte_lang::message.schedule') }}</h3>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
             </div>
             <div class="col-lg-4">
-                <img src="{{ asset('/img/intro03.png') }}" alt="">
+                <img src="{{ asset('assets/img/intro03.png') }}" alt="">
                 <h3>{{ trans('adminlte_lang::message.monitoring') }}</h3>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
             </div>
@@ -140,7 +140,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
             <br>
             <br>
             <div class="col-lg-6 centered">
-                <img class="centered" src="{{ asset('/img/mobile.png') }}" alt="">
+                <img class="centered" src="{{ asset('assets/img/mobile.png') }}" alt="">
             </div>
 
             <div class="col-lg-6">
@@ -227,10 +227,10 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <div class="item active">
-                            <img src="{{ asset('/img/item-01.png') }}" alt="">
+                            <img src="{{ asset('assets/img/item-01.png') }}" alt="">
                         </div>
                         <div class="item">
-                            <img src="{{ asset('/img/item-02.png') }}" alt="">
+                            <img src="{{ asset('assets/img/item-02.png') }}" alt="">
                         </div>
                     </div>
                 </div>
@@ -296,7 +296,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="{{ asset('/js/bootstrap.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
 <script>
     $('.carousel').carousel({
         interval: 3500
