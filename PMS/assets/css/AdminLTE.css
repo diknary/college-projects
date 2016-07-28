@@ -108,7 +108,7 @@ body {
 /* Fixed layout */
 .fixed .main-header,
 .fixed .main-sidebar,
-.fixed .left-side {
+.fixed .left-side{
   position: fixed;
 }
 .fixed .main-header {
@@ -324,15 +324,14 @@ a:focus {
   font-weight: 300;
 }
 .content-header > .breadcrumb {
-  float: right;
   background: transparent;
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 12px;
+  font-size: 20px;
   padding: 7px 5px;
   position: absolute;
   top: 15px;
-  right: 10px;
+  left: 25px;
   border-radius: 2px;
 }
 .content-header > .breadcrumb > li > a {
@@ -4922,4 +4921,8 @@ table.text-center th {
   .table-responsive > .table tr td {
     white-space: normal !important;
   }
+}
+
+.pointer{
+  cursor:pointer;
 }

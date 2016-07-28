@@ -23,10 +23,10 @@ class Notification
     {
         /*$user = Auth::user();
         $view = DB::table('notification')->where('user_id', $user->id)->get();*/
-        $view = DB::table('notification')
-                ->where('user_id', '=', 2)
+        $share = DB::table('notification')
+                ->where('user_id', '=', 1)
                 ->where('status', '=', 0)
                 ->get();
-        return $view;
+        return $share;
     }
 }

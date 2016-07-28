@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
                 ->where('status', '=', 0)
                 ->count();*/
         view()->share('count', $notifs->notif());
-        view()->share('view', $notifs->viewnotif());
+        view()->share('share', $notifs->viewnotif());
     }
 
     /**

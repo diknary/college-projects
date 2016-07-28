@@ -9,7 +9,7 @@
     <body class="hold-transition register-page">
     <div class="register-box">
         <div class="register-logo">
-            <a href="{{ url('/home') }}"><b>Portal Management System</b><br>FMIPA-IPB</a>
+            <a href="{{ url('/') }}"><b>Portal Management System</b><br>FMIPA-IPB</a>
         </div>
 
         @if (count($errors) > 0)
@@ -35,6 +35,16 @@
                     <input type="email" class="form-control" placeholder="{{ trans('adminlte_lang::message.email') }}" name="email" value="{{ old('email') }}"/>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
+
+                <div class="form-group">
+                  <select name="status" id="status" class="form-control">
+                    <option value="mahasiswa">Mahasiswa</option>
+                    <option value="dosen">Dosen</option>
+                    <option value="pegawai">Pegawai</option>
+                  </select>
+                </div>
+
+
                 <div class="form-group has-feedback">
                     <input type="password" class="form-control" placeholder="{{ trans('adminlte_lang::message.password') }}" name="password"/>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>

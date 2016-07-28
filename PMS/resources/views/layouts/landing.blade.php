@@ -23,10 +23,17 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     <meta name="twitter:site" content="@acachawiki" />
     <meta name="twitter:creator" content="@acacha1" />
 
-    <title>{{ trans('adminlte_lang::message.landingdescriptionpratt') }}</title>
+    <title>Portal Management System</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('assets/css/AdminLTE.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/AdminLTE.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('assets/css/skins/_all-skins.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/skins/_all-skins.min.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
@@ -51,21 +58,36 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><b>adminlte-laravel</b></a>
+            <a class="navbar-brand" href="{{ url('/') }}"><b>Portal Management System</b></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#home" class="smoothScroll">{{ trans('adminlte_lang::message.home') }}</a></li>
-                <li><a href="#desc" class="smoothScroll">{{ trans('adminlte_lang::message.description') }}</a></li>
-                <li><a href="#showcase" class="smoothScroll">{{ trans('adminlte_lang::message.showcase') }}</a></li>
-                <li><a href="#contact" class="smoothScroll">{{ trans('adminlte_lang::message.contact') }}</a></li>
+                <li class="active"><a href="#showcase" class="smoothScroll">Beranda</a></li>
+                <li><a href="#news" class="smoothScroll">Berita</a></li>
+                <li><a href="#contact" class="smoothScroll">Kontak</a></li>
+                <!-- <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Arsip
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">MOM Rapat</a></li>
+                    <li><a href="#">Page 1-2</a></li>
+                    <li><a href="#">Page 1-3</a></li>
+                  </ul>
+                </li> -->
             </ul>
             <ul class="nav navbar-nav navbar-right">
+              {{-- <li>
+                  <input type="text" class="form-control">
+              </li>
+              <li>
+                  <button type="button" class="btn btn-info btn-flat">Search</button>
+              </li> --}}
+
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">{{ trans('adminlte_lang::message.login') }}</a></li>
                     <li><a href="{{ url('/register') }}">{{ trans('adminlte_lang::message.register') }}</a></li>
                 @else
-                    <li><a href="{{ url('home') }}">{{ Auth::user()->name }}</a></li>
+                    <li><a href="{{ url('/student-dashboard') }}">{{ Auth::user()->name }}</a></li>
                 @endif
             </ul>
         </div><!--/.nav-collapse -->
@@ -73,186 +95,239 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
 </div>
 
 
-<section id="home" name="home"></section>
-<div id="headerwrap">
-    <div class="container">
-        <div class="row centered">
-            <div class="col-lg-12">
-                <h1>Acacha <b><a href="https://github.com/acacha/adminlte-laravel">adminlte-laravel</a></b></h1>
-                <h3>A <a href="https://laravel.com/">Laravel</a> {{ trans('adminlte_lang::message.laravelpackage') }}
-                    scaffolding/boilerplate {{ trans('adminlte_lang::message.to') }} <a href="https://almsaeedstudio.com/preview">AdminLTE</a> {{ trans('adminlte_lang::message.templatewith') }}
-                    <a href="http://getbootstrap.com/">Bootstrap</a> 3.0 {{ trans('adminlte_lang::message.and') }} <a href="http://blacktie.co/demo/pratt/">Pratt</a> Landing page</h3>
-                <h3><a href="{{ url('/register') }}" class="btn btn-lg btn-success">{{ trans('adminlte_lang::message.gedstarted') }}</a></h3>
-            </div>
-            <div class="col-lg-2">
-                <h5>{{ trans('adminlte_lang::message.amazing') }}</h5>
-                <p>{{ trans('adminlte_lang::message.basedadminlte') }}</p>
-                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('assets/img/arrow1.png') }}">
-            </div>
-            <div class="col-lg-8">
-                <img class="img-responsive" src="{{ asset('assets/img/app-bg.png') }}" alt="">
-            </div>
-            <div class="col-lg-2">
-                <br>
-                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('assets/img/arrow2.png') }}">
-                <h5>{{ trans('adminlte_lang::message.awesomepackaged') }}</h5>
-                <p>... {{ trans('adminlte_lang::message.by') }} <a href="http://acacha.org/sergitur">Sergi Tur Badenas</a> {{ trans('adminlte_lang::message.at') }} <a href="http://acacha.org">acacha.org</a> {{ trans('adminlte_lang::message.readytouse') }}</p>
-            </div>
-        </div>
-    </div> <!--/ .container -->
-</div><!--/ #headerwrap -->
-
-
-<section id="desc" name="desc"></section>
-<!-- INTRO WRAP -->
-<div id="intro">
-    <div class="container">
-        <div class="row centered">
-            <h1>{{ trans('adminlte_lang::message.designed') }}</h1>
-            <br>
-            <br>
-            <div class="col-lg-4">
-                <img src="{{ asset('assets/img/intro01.png') }}" alt="">
-                <h3>{{ trans('adminlte_lang::message.community') }}</h3>
-                <p>{{ trans('adminlte_lang::message.see') }} <a href="https://github.com/acacha/adminlte-laravel">{{ trans('adminlte_lang::message.githubproject') }}</a>, {{ trans('adminlte_lang::message.post') }} <a href="https://github.com/acacha/adminlte-laravel/issues">{{ trans('adminlte_lang::message.issues') }}</a> {{ trans('adminlte_lang::message.and') }} <a href="https://github.com/acacha/adminlte-laravel/pulls">{{ trans('adminlte_lang::message.pullrequests') }}</a></p>
-            </div>
-            <div class="col-lg-4">
-                <img src="{{ asset('assets/img/intro02.png') }}" alt="">
-                <h3>{{ trans('adminlte_lang::message.schedule') }}</h3>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-            </div>
-            <div class="col-lg-4">
-                <img src="{{ asset('assets/img/intro03.png') }}" alt="">
-                <h3>{{ trans('adminlte_lang::message.monitoring') }}</h3>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-            </div>
-        </div>
-        <br>
-        <hr>
-    </div> <!--/ .container -->
-</div><!--/ #introwrap -->
-
-<!-- FEATURES WRAP -->
-<div id="features">
-    <div class="container">
-        <div class="row">
-            <h1 class="centered">{{ trans('adminlte_lang::message.whatnew') }}</h1>
-            <br>
-            <br>
-            <div class="col-lg-6 centered">
-                <img class="centered" src="{{ asset('assets/img/mobile.png') }}" alt="">
-            </div>
-
-            <div class="col-lg-6">
-                <h3>{{ trans('adminlte_lang::message.features') }}</h3>
-                <br>
-                <!-- ACCORDION -->
-                <div class="accordion ac" id="accordion2">
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                                {{ trans('adminlte_lang::message.design') }}
-                            </a>
-                        </div><!-- /accordion-heading -->
-                        <div id="collapseOne" class="accordion-body collapse in">
-                            <div class="accordion-inner">
-                                <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                            </div><!-- /accordion-inner -->
-                        </div><!-- /collapse -->
-                    </div><!-- /accordion-group -->
-                    <br>
-
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                                {{ trans('adminlte_lang::message.retina') }}
-                            </a>
-                        </div>
-                        <div id="collapseTwo" class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                            </div><!-- /accordion-inner -->
-                        </div><!-- /collapse -->
-                    </div><!-- /accordion-group -->
-                    <br>
-
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
-                                {{ trans('adminlte_lang::message.support') }}
-                            </a>
-                        </div>
-                        <div id="collapseThree" class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                            </div><!-- /accordion-inner -->
-                        </div><!-- /collapse -->
-                    </div><!-- /accordion-group -->
-                    <br>
-
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
-                                {{ trans('adminlte_lang::message.responsive') }}
-                            </a>
-                        </div>
-                        <div id="collapseFour" class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                            </div><!-- /accordion-inner -->
-                        </div><!-- /collapse -->
-                    </div><!-- /accordion-group -->
-                    <br>
-                </div><!-- Accordion -->
-            </div>
-        </div>
-    </div><!--/ .container -->
-</div><!--/ #features -->
-
-
-<section id="showcase" name="showcase"></section>
+{{-- <section id="showcase" name="showcase"></section> --}}
 <div id="showcase">
     <div class="container">
         <div class="row">
-            <h1 class="centered">{{ trans('adminlte_lang::message.screenshots') }}</h1>
-            <br>
-            <div class="col-lg-8 col-lg-offset-2">
+            {{-- <h1 class="centered">{{ trans('adminlte_lang::message.screenshots') }}</h1> --}}
+            <div class="col-lg-6 col-lg-offset-3">
                 <div id="carousel-example-generic" class="carousel slide">
                     <!-- Indicators -->
                     <ol class="carousel-indicators">
                         <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                         <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
                     </ol>
 
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <div class="item active">
-                            <img src="{{ asset('assets/img/item-01.png') }}" alt="">
+                            <img src="{{ asset('assets/img/fmipa-iso1.jpg') }}" alt="">
                         </div>
                         <div class="item">
-                            <img src="{{ asset('assets/img/item-02.png') }}" alt="">
+                            <img src="{{ asset('assets/img/fmipa-iso2.jpg') }}" alt="">
+                        </div>
+                        <div class="item">
+                            <img src="{{ asset('assets/img/fmipa-iso3.jpg') }}" alt="">
+                        </div>
+                        <div class="item">
+                            <img src="{{ asset('assets/img/fmipa-iso4.jpg') }}" alt="">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <br>
-        <br>
-        <br>
+
     </div><!-- /container -->
 </div>
 
 
+
+<!-- FEATURES WRAP -->
+<div id="news">
+    <div class="container">
+        <div class="row">
+
+          <!-- Content Wrapper. Contains page content -->
+
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+      <aside class="" style="float:right;width:30%">
+        <div class="">
+
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">Berita Terbaru</h3>
+
+              <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="box-body no-padding">
+              <ul class="nav nav-pills nav-stacked">
+                <li><a href="#berita1" class="smoothScroll"> Undangan Kegiatan</a></li>
+                <li><a href="#berita2" class="smoothScroll"> Fakultas MIPA IPB</a></li>
+              </ul>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /. box -->
+
+          <!-- <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">Portal</h3>
+
+              <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="box-body no-padding">
+              <ul class="nav nav-pills nav-stacked">
+                <li><a href="#"><i class="fa fa-circle-o text-red"></i> Mahasiswa</a></li>
+                <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Dosen/Pegawai</a></li>
+
+              </ul>
+            </div> -->
+            <!-- /.box-body -->
+          <!-- </div> -->
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+
+      </aside>
+
+
+    <div class="row">
+
+      <div  id="berita1" class="col-md-8">
+        <div class="box box-primary">
+
+          <!-- /.box-header -->
+          <div class="box-body no-padding">
+            <div class="mailbox-read-info">
+              <h2>Undangan Kegiatan</h2>
+              <h5>Publish by : Admin FMIPA
+                <span class="mailbox-read-time pull-right">15 Feb. 2016 11:03 PM</span></h5>
+            </div>
+            <!-- /.mailbox-read-info -->
+            <div class="mailbox-controls with-border text-center">
+              {{-- <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete">
+                  <i class="fa fa-trash-o"></i></button>
+                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
+                  <i class="fa fa-reply"></i></button>
+                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
+                  <i class="fa fa-share"></i></button>
+              </div> --}}
+              <!-- /.btn-group -->
+              {{-- <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
+                <i class="fa fa-print"></i></button> --}}
+            </div>
+            <!-- /.mailbox-controls -->
+            <div class="mailbox-read-message">
+              <p>Lorem Ipsum</p>
+
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+            </div>
+            <!-- /.mailbox-read-message -->
+          </div>
+
+          {{-- <!-- /.box-footer -->
+          <div class="box-footer">
+            <div class="pull-right">
+              <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
+              <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
+            </div>
+            <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
+            <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
+          </div>
+          <!-- /.box-footer --> --}}
+        </div>
+        <!-- /. box -->
+      </div>
+      <!-- /.col -->
+
+
+      <div  id="berita2" class="col-md-8">
+        <div class="box box-primary">
+
+          <!-- /.box-header -->
+          <div class="box-body no-padding">
+            <div id="berita2" class="mailbox-read-info">
+              <h2>Fakultas MIPA IPB - Faculty of Mathematic and Natural Sciences</h2>
+              <h5>Publish by : Admin FMIPA
+                <span class="mailbox-read-time pull-right">15 Feb. 2016 11:03 PM</span></h5>
+            </div>
+            <!-- /.mailbox-read-info -->
+            <div class="mailbox-controls with-border text-center">
+              {{-- <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete">
+                  <i class="fa fa-trash-o"></i></button>
+                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
+                  <i class="fa fa-reply"></i></button>
+                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
+                  <i class="fa fa-share"></i></button>
+              </div> --}}
+              <!-- /.btn-group -->
+              {{-- <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
+                <i class="fa fa-print"></i></button> --}}
+            </div>
+            <!-- /.mailbox-controls -->
+            <div class="mailbox-read-message">
+              <p>Lorem Ipsum</p>
+
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+            </div>
+            <!-- /.mailbox-read-message -->
+          </div>
+
+          {{-- <!-- /.box-footer -->
+          <div class="box-footer">
+            <div class="pull-right">
+              <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
+              <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
+            </div>
+            <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
+            <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
+          </div>
+          <!-- /.box-footer --> --}}
+        </div>
+        <!-- /. box -->
+      </div>
+      <!-- /.col -->
+
+
+
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+
+
+        </div>
+
+        </div>
+    </div><!--/ .container -->
+
+
+
+
 <section id="contact" name="contact"></section>
-<div id="footerwrap">
+<!-- <div id="footerwrap">
     <div class="container">
         <div class="col-lg-5">
             <h3>{{ trans('adminlte_lang::message.address') }}</h3>
             <p>
-                Av. Greenville 987,<br/>
-                New York,<br/>
-                90873<br/>
-                United States
+                Gedung FMIPA IPB<br/>
+                Jalan Meranti<br/>
+                Kampus IPB Dramaga<br/>
+                Bogor
+                16630
             </p>
         </div>
 
@@ -277,16 +352,14 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
             </form>
         </div>
     </div>
-</div>
+</div> -->
 <div id="c">
     <div class="container">
         <p>
-            <a href="https://github.com/acacha/adminlte-laravel"></a><b>admin-lte-laravel</b></a>. {{ trans('adminlte_lang::message.descriptionpackage') }}.<br/>
-            <strong>Copyright &copy; 2015 <a href="http://acacha.org">Acacha.org</a>.</strong> {{ trans('adminlte_lang::message.createdby') }} <a href="http://acacha.org/sergitur">Sergi Tur Badenas</a>. {{ trans('adminlte_lang::message.seecode') }} <a href="https://github.com/acacha/adminlte-laravel">Github</a>
+            FMIPA IPB. Jalan Meranti Kampus IPB Dramaga Bogor<br/>
+            Tlp/Fax : 0251-8625481 | E-mail: fmipa@ipb.ac.id
             <br/>
-            AdminLTE {{ trans('adminlte_lang::message.createdby') }} Abdullah Almsaeed <a href="https://almsaeedstudio.com/">almsaeedstudio.com</a>
-            <br/>
-             Pratt Landing Page {{ trans('adminlte_lang::message.createdby') }} <a href="http://www.blacktie.co">BLACKTIE.CO</a>
+
         </p>
 
     </div>

@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title> AdminLTE 2 with Laravel - @yield('htmlheader_title', 'Your title here') </title>
+    <title> PMS - @yield('htmlheader_title', 'Your title here') </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
@@ -19,9 +19,9 @@
     <link href="{{ asset('assets/plugins/iCheck/square/blue.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/iCheck/all.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- <link href="{{ asset('/plugins/select2/select2.css') }}" rel="stylesheet" type="text/css" /> -->
-   
-    
+    <script src="{{ asset('assets/plugins/chartjs/Chart.js') }}" type="text/javascript"></script>
+
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
