@@ -30,13 +30,41 @@ Route::group(['middleware' => 'supervisor'], function(){
 	Route::get('/mipadoc', function () {
     return view('supervisor.mipa-documents');
 	});
-	Route::get('/komdoc', function () {
-    return view('supervisor.kom-documents');
-	});
 	Route::get('/documents', function () {
     return view('supervisor.supervisor-documents');
 	});
+	Route::get('/documents/', [
+	 'uses' => 'DocumentController@supervisorfolder',
+	 'as'   => 'supervisor-documents'
+	 ]);
 	Route::get('/supervisor-logout', 'UserController@logout');
+
+	Route::get('/operator-add', function () {
+    return view('operator_add');
+	});
+
+	// folder
+	Route::post('/folder-create', [
+		'uses' => 'DocumentController@createFolder',
+		'as' => 'folder-create'
+	]);
+	Route::post('/folder-delete', [
+		'uses' => 'DocumentController@deleteFolder',
+		'as' => 'folder-delete'
+	]);
+	Route::post('/folder-move', [
+		'uses' => 'DocumentController@moveFolder',
+		'as' => 'folder-move'
+	]);
+	Route::post('/folder-copy', [
+		'uses' => 'DocumentController@copyFolder',
+		'as' => 'folder-copy'
+	]);
+	Route::post('/folder-rename', [
+		'uses' => 'DocumentController@renameFolder',
+		'as' => 'folder-rename'
+	]);
+
 
 });
 
@@ -44,24 +72,10 @@ Route::group(['middleware' => 'student'], function(){
 	Route::get('/student-dashboard', function () {
     return view('student.student-dashboard');
 	});
-	Route::get('/student-documents/', function () {
-    return view('student.student-documents');
-	});
-	Route::get('/student-documents/ilkom', function () {
-    return view('student.student-documents-ilkom');
-	});
-	Route::get('/student-documents/ilkom/frm', function () {
-    return view('student.student-documents-ilkom-frm');
-	});
-	Route::get('/student-documents/ilkom/frm/akademik', function () {
-    return view('student.student-documents-ilkom-frm-akademik');
-	});
-	Route::get('/student-documents/ilkom/pob-teknis', function () {
-    return view('student.student-documents-ilkom-pob_teknis');
-	});
-	Route::get('/student-documents/ilkom/pob-teknis/akademik', function () {
-    return view('student.student-documents-ilkom-pob_teknis-akademik');
-	});
+	Route::get('/student-documents/', [
+		'uses' => 'DocumentController@studentfolder',
+		'as' => 'student-documents'
+	]);
 	Route::get('/student-upload', function () {
     return view('student.student-upload');
 	});

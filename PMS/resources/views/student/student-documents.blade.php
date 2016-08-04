@@ -20,72 +20,14 @@
                   <th>Owner</th>
                   <th>Last Modified</th>
                 </tr>
-								<tr class="pointer" data-href="google.com">
-                   <td><i class='fa fa-folder'></i>
-                   <a id="golink" href="#">Departemen Statistika</a></td>
-                   <td>Penanggung Jawab</td></td>
-                   <td>11-7-2014</td>
-                </tr>
-								<tr class="pointer" data-href="google.com">
-	                  <td><i class='fa fa-folder'></i>
-	                  <a id="golink" href="#">Departemen Geofisika dan Meteorologi</a></td>
-	                  <td>Penanggung Jawab</td></td>
-	                  <td>11-7-2014</td>
-	              </tr>
-								<tr class="pointer" data-href="google.com">
-	                  <td><i class='fa fa-folder'></i>
-	                  <a id="golink" href="#">Departemen Biologi</a></td>
-	                  <td>Penanggung Jawab</td></td>
-	                  <td>11-7-2014</td>
-	              </tr>
-								<tr class="pointer" data-href="google.com">
-	                  <td><i class='fa fa-folder'></i>
-	                  <a id="golink" href="#">Departemen Kimia</a></td>
-	                  <td>Penanggung Jawab</td></td>
-	                  <td>11-7-2014</td>
-	              </tr>
-								<tr class="pointer" data-href="google.com">
-	                  <td><i class='fa fa-folder'></i>
-	                  <a id="golink" href="#">Departemen Matematika</a></td>
-	                  <td>Penanggung Jawab</td></td>
-	                  <td>11-7-2014</td>
-	              </tr>
-								<tr class="pointer" data-href="{{ url('student-documents/ilkom') }}">
-	                  <td><i class='fa fa-folder'></i>
-	                  <a id="golink" href="{{ url('student-documents/ilkom') }}">Departemen Ilmu Komputer</a></td>
-	                  <td>Penanggung Jawab</td></td>
-	                  <td>11-7-2014</td>
-	              </tr>
-								<tr class="pointer" data-href="google.com">
-	                  <td><i class='fa fa-folder'></i>
-	                  <a id="golink" href="#">Departemen Fisika</a></td>
-	                  <td>Penanggung Jawab</td></td>
-	                  <td>11-7-2014</td>
-	              </tr>
-               <tr class="pointer" data-href="google.com">
+							 @foreach ($folders as $folder)
+               <tr class="pointer" data-href="{{ route('student-documents' , ['idfolder' => $folder->id])}}" >
                   <td><i class='fa fa-folder'></i>
-                  <a id="golink" href="">Departemen Bioimia</a></td>
-                  <td>Penanggung Jawab</td></td>
+                  {{$folder->nama_folder}}</td>
+                  <td>{{$folder->owner}}</td></td>
                   <td>11-7-2014</td>
-                </tr>
-                <tr class="pointer" data-href="facebook.com">
-                  <td><i class='fa fa-folder'></i>
-                  <a id="golink" href="#">FMIPA</a></td>
-                  <td>Penanggung Jawab</td></td>
-                  <td>11-8-2014</td>
-                </tr>
-                <tr class="pointer" data-href="facebook.com">
-                  <td><i class='fa fa-folder'></i>
-                  <a id="golink" href="#">MOM Rapat</a></td>
-                  <td>Penanggung Jawab</td></td>
-                  <td>11-7-2014</td>
-                </tr>
-								<tr class="pointer" data-href="facebook.com">
-                  <td><i class='fa fa-folder'></i>
-                  <a id="golink" href="#">Pedoman Mutu</a></td>
-                  <td>Penanggung Jawab</td></td>
-                  <td>11-7-2014</td>
-                </tr>
+               </tr>
+               @endforeach
               </tbody></table>
             </div>
             <!-- /.box-body -->

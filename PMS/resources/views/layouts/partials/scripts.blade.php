@@ -13,20 +13,8 @@ REQUIRED JS SCRIPTS -->
 <!-- SlimScroll -->
 <script src="{{ asset('assets/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('assets/js/myscript.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/plugins/iCheck/icheck.js') }}" type="text/javascript"></script>
 
-<script>
-	$(function () {
-    $(".select2").select2();
-
- });
-    </script>
-<script>
-jQuery(document).ready(function($) {
-    $(".pointer").click(function() {
-        window.document.location = $(this).data("href");
-    });
-});
-</script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the

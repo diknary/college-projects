@@ -7,12 +7,11 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+
 use Session;
 use App\User;
 use App\Http\Controllers\Input;
 use App\Http\Requests;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -53,7 +52,7 @@ class UserController extends Controller
 
         if(empty($result)){
             $get = User::where('username', $username)->first();
-            Session::put(['id' => $get->id, 'supervisorName' => $get->name]);
+            Session::put(['id' => $get->username, 'supervisorName' => $get->name, 'departemen' => $get->departemen]);
             return Redirect::to('home');
         }
         else{
@@ -62,19 +61,6 @@ class UserController extends Controller
             return Redirect::to('student-dashboard');
           }
         
-    }
-
-    public function send(Request $data)
-    {
-        $selected = $data->input('selected_user');
-        $serial_select = serialize($selected);
-        $doc = $data->input('POBname');
-        foreach ($selected as $value) {
-            DB::table('notification')->insert(
-                    ['user_id' => $value, 'name' => $doc, 'status' => 0 ]
-                );
-        }
-        return Redirect::to('home'); 
     }
 
     public function logout()
