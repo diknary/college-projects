@@ -52,5 +52,7 @@ class Kernel extends HttpKernel
         'tamu' => \App\Http\Middleware\Tamu::class,
         'student' => \App\Http\Middleware\Student::class,
         'supervisor' => \App\Http\Middleware\Supervisor::class,
+        'admin' => \App\Http\Middleware\Admin::class,
+        'staff' => \App\Http\Middleware\Staff::class,
     ];
 }

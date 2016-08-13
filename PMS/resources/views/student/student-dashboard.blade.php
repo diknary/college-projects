@@ -1,4 +1,4 @@
-@extends('layouts.student')
+@extends('layouts.masters.student')
 
 @section('htmlheader_title')
 	Dashboard

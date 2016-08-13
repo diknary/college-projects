@@ -1,4 +1,4 @@
-@extends('layouts.student')
+@extends('layouts.masters.student')
 
 @section('htmlheader_title')
 	Upload
@@ -15,36 +15,35 @@
 						<h3 class="box-title">Upload File (.zip)</h3>
 						</div>
 
-						<form action="{{url('/send_POB')}}" method="get">
-							{!! csrf_field() !!}
+						<form action="{{ route('form-upload') }}" method="post" enctype="multipart/form-data">
 							<div class="box-body">
 
 								<div class="form-group">
 								  <label for="POBname">Kategori</label>
-									<select id='kategori-form' class="form-control">
-										<option value="FRM-09-01a-01">FRM-09-01a-01 - Permohonan Surat Keterangan</option>
-                    <option value="FRM-09-01b-01">FRM-09-01b-01 - Surat Keterangan Aktif Kuliah Untuk Tunjangan Anak</option>
-                    <option value="FRM-09-02-02">FRM-09-02-02 - Verifikasi Dokumen Surat Keterangan</option>
-                    <option value="FRM-10-01-01">FRM-10-01-01 - Formulir Mahasiswa Yang Mengajukan Cuti Akademik</option>
-                    <option value="FRM-10-02-02">FRM-10-02-02 - Verifikasi Dokumen Surat Cuti Akademik</option>
-										<option value="FRM-11-01-01">FRM-11-01-01 - Formulir Mahasiswa Yang Mengajukan Aktif Kembali</option>
-										<option value="FRM-11-02-02">FRM-11-02-02 - Verifikasi Dokumen Surat Aktif Kembali</option>
-										<option value="FRM-12-01-01">FRM-12-01-01 - Formulir Data Mahasiswa Yang Mengajukan Undur Diri</option>
-										<option value="FRM-12-02-02">FRM-12-02-02 - Verifikasi Dokumen Surat Undur Diri</option>
-										<option value="FRM-13-01-01">FRM-13-01-01 - Formulir Data Mahasiswa Yang Mengajukan Sidang Komisi Pascasarjana</option>
-										<option value="FRM-13-02-02">FRM-13-02-02 - Verifikasi Dokumen Surat Sidang Komisi Pascasarjana</option>
-										<option value="FRM-14-01-01">FRM-14-01-01 - Formulir Data Mahasiswa Yang Mengajukan Perpanjangan Studi</option>
-										<option value="FRM-14-02-02">FRM-14-02-02 - Verifikasi Dokumen Surat Perpanjangan Studi</option>
-										<option value="FRM-15-01-01">FRM-15-01-01 - Formulir Data Mahasiswa Yang Mengajukan Surat Keterangan Lulus</option>
-										<option value="FRM-15-02-02">FRM-15-02-02 - Verifikasi Dokumen Surat Keterangan Lulus</option>
-										<option value="FRM-16-01-01">FRM-16-01-01 - Formulir Data Mahasiswa Yang Mengajukan Surat Percepatan Ijazah</option>
-										<option value="FRM-16-02-02">FRM-16-02-02 - Verifikasi Dokumen Surat Percepatan Ijazah</option>
-										<option value="FRM-17-01-01">FRM-17-01-01 - Formulir Data Mahasiswa Yang Mengajukan Legalisir</option>
-										<option value="FRM-17-02-02">FRM-17-02-02 - Verifikasi Dokumen Legalisir</option>
+									<select id="kategori-form" name="kategori-form" class="form-control">
+										<option value="FRM-09-01a-01 - Permohonan Surat Keterangan">FRM-09-01a-01 - Permohonan Surat Keterangan</option>
+                    <option value="FRM-09-01b-01 - Surat Keterangan Aktif Kuliah Untuk Tunjangan Anak">FRM-09-01b-01 - Surat Keterangan Aktif Kuliah Untuk Tunjangan Anak</option>
+                    <option value="FRM-09-02-02 - Verifikasi Dokumen Surat Keterangan">FRM-09-02-02 - Verifikasi Dokumen Surat Keterangan</option>
+                    <option value="FRM-10-01-01 - Formulir Mahasiswa Yang Mengajukan Cuti Akademik">FRM-10-01-01 - Formulir Mahasiswa Yang Mengajukan Cuti Akademik</option>
+                    <option value="FRM-10-02-02 - Verifikasi Dokumen Surat Cuti Akademik">FRM-10-02-02 - Verifikasi Dokumen Surat Cuti Akademik</option>
+										<option value="FRM-11-01-01 - Formulir Mahasiswa Yang Mengajukan Aktif Kembali">FRM-11-01-01 - Formulir Mahasiswa Yang Mengajukan Aktif Kembali</option>
+										<option value="FRM-11-02-02 - Verifikasi Dokumen Surat Aktif Kembali">FRM-11-02-02 - Verifikasi Dokumen Surat Aktif Kembali</option>
+										<option value="FRM-12-01-01 - Formulir Data Mahasiswa Yang Mengajukan Undur Diri">FRM-12-01-01 - Formulir Data Mahasiswa Yang Mengajukan Undur Diri</option>
+										<option value="FRM-12-02-02 - Verifikasi Dokumen Surat Undur Diri">FRM-12-02-02 - Verifikasi Dokumen Surat Undur Diri</option>
+										<option value="FRM-13-01-01 - Formulir Data Mahasiswa Yang Mengajukan Sidang Komisi Pascasarjana">FRM-13-01-01 - Formulir Data Mahasiswa Yang Mengajukan Sidang Komisi Pascasarjana</option>
+										<option value="FRM-13-02-02 - Verifikasi Dokumen Surat Sidang Komisi Pascasarjana">FRM-13-02-02 - Verifikasi Dokumen Surat Sidang Komisi Pascasarjana</option>
+										<option value="FRM-14-01-01 - Formulir Data Mahasiswa Yang Mengajukan Perpanjangan Studi">FRM-14-01-01 - Formulir Data Mahasiswa Yang Mengajukan Perpanjangan Studi</option>
+										<option value="FRM-14-02-02 - Verifikasi Dokumen Surat Perpanjangan Studi">FRM-14-02-02 - Verifikasi Dokumen Surat Perpanjangan Studi</option>
+										<option value="FRM-15-01-01 - Formulir Data Mahasiswa Yang Mengajukan Surat Keterangan Lulus">FRM-15-01-01 - Formulir Data Mahasiswa Yang Mengajukan Surat Keterangan Lulus</option>
+										<option value="FRM-15-02-02 - Verifikasi Dokumen Surat Keterangan Lulus">FRM-15-02-02 - Verifikasi Dokumen Surat Keterangan Lulus</option>
+										<option value="FRM-16-01-01 - Formulir Data Mahasiswa Yang Mengajukan Surat Percepatan Ijazah">FRM-16-01-01 - Formulir Data Mahasiswa Yang Mengajukan Surat Percepatan Ijazah</option>
+										<option value="FRM-16-02-02 - Verifikasi Dokumen Surat Percepatan Ijazah">FRM-16-02-02 - Verifikasi Dokumen Surat Percepatan Ijazah</option>
+										<option value="FRM-17-01-01 - Formulir Data Mahasiswa Yang Mengajukan Legalisir">FRM-17-01-01 - Formulir Data Mahasiswa Yang Mengajukan Legalisir</option>
+										<option value="FRM-17-02-02 - Verifikasi Dokumen Legalisir">FRM-17-02-02 - Verifikasi Dokumen Legalisir</option>
                   </select>
 								</div>
 
-								<div style='display:show' id='FRM-09-01a-01' class="form-group">
+								<div style='display:show' id="FRM-09-01a-01" class="form-group">
 									<label>PERSYARATAN DOKUMEN LAIN YANG HARUS DIUPLOAD BERSAMA</label>
 									<p>
 										<strong>Persyaratan Surat Pembuatan Visa</strong>
@@ -68,7 +67,7 @@
 									</p>
 								</div>
 
-								<div style='display:none' id='FRM-09-01b-01' class="form-group">
+								<div style='display:none' id="FRM-09-01b-01" class="form-group">
 									<label>PERSYARATAN DOKUMEN LAIN YANG HARUS DIUPLOAD BERSAMA</label>
 									<p>
 										<ol>
@@ -358,8 +357,12 @@
 								</div>
 
 								<div class="form-group">
+									<!-- Hidden input -->
+									<input type="hidden" name="_token" value="{{ csrf_token() }}">
+									<input type="hidden" name="nim" id="nim" value="{{ Session::get('NIM') }}">
+									<!-- End hidden input -->
 								  <label>File upload</label>
-								  <input type="file" id="fileupload">
+								  <input type="file" name="uploadform" id="uploadform" accept=".zip">
 								</div>
 
 

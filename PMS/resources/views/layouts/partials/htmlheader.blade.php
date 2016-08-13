@@ -19,9 +19,8 @@
     <link href="{{ asset('assets/plugins/iCheck/square/blue.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/iCheck/all.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <script src="{{ asset('assets/plugins/chartjs/Chart.js') }}" type="text/javascript"></script>
-
-
+    <link href="{{ asset('assets/plugins/filetree/jqueryFileTree.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

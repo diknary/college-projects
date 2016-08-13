@@ -16,14 +16,14 @@ class Notification
     {
         /*$user = Auth::user();
         $view = DB::table('notification')->where('user_id', $user->id)->get();*/
-        $count = DB::table('notification')->count();
+        $count = DB::table('notifications')->count();
         return $count;
     }
     public function viewnotif()
     {
         /*$user = Auth::user();
         $view = DB::table('notification')->where('user_id', $user->id)->get();*/
-        $share = DB::table('notification')
+        $share = DB::table('notifications')
                 ->where('user_id', '=', 1)
                 ->where('status', '=', 0)
                 ->get();

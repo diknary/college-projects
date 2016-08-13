@@ -65,6 +65,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                 <li class="active"><a href="#showcase" class="smoothScroll">Beranda</a></li>
                 <li><a href="#news" class="smoothScroll">Berita</a></li>
                 <li><a href="#contact" class="smoothScroll">Kontak</a></li>
+                <li><a href="{{ url('/about') }}" >Tentang</a></li>
                 <!-- <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Arsip
                   <span class="caret"></span></a>
@@ -114,6 +115,9 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                     <div class="carousel-inner">
                         <div class="item active">
                             <img src="{{ asset('assets/img/fmipa-iso1.jpg') }}" alt="">
+                            <div class="carousel-caption">
+                              First Slide
+                            </div>
                         </div>
                         <div class="item">
                             <img src="{{ asset('assets/img/fmipa-iso2.jpg') }}" alt="">
@@ -125,6 +129,12 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                             <img src="{{ asset('assets/img/fmipa-iso4.jpg') }}" alt="">
                         </div>
                     </div>
+                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                      <span class="fa fa-angle-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                      <span class="fa fa-angle-right"></span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -136,183 +146,188 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
 
 <!-- FEATURES WRAP -->
 <div id="news">
-    <div class="container">
-        <div class="row">
-
-          <!-- Content Wrapper. Contains page content -->
-
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-
-  </section>
-
-  <!-- Main content -->
-  <section class="content">
-
-      <aside class="" style="float:right;width:30%">
-        <div class="">
-
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <h3 class="box-title">Berita Terbaru</h3>
-
-              <div class="box-tools">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="box-body no-padding">
-              <ul class="nav nav-pills nav-stacked">
-                <li><a href="#berita1" class="smoothScroll"> Undangan Kegiatan</a></li>
-                <li><a href="#berita2" class="smoothScroll"> Fakultas MIPA IPB</a></li>
-              </ul>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /. box -->
-
-          <!-- <div class="box box-solid">
-            <div class="box-header with-border">
-              <h3 class="box-title">Portal</h3>
-
-              <div class="box-tools">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="box-body no-padding">
-              <ul class="nav nav-pills nav-stacked">
-                <li><a href="#"><i class="fa fa-circle-o text-red"></i> Mahasiswa</a></li>
-                <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Dosen/Pegawai</a></li>
-
-              </ul>
-            </div> -->
-            <!-- /.box-body -->
-          <!-- </div> -->
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-
-      </aside>
-
-
+  <div class="container">
     <div class="row">
 
-      <div  id="berita1" class="col-md-8">
-        <div class="box box-primary">
+      <!-- Content Wrapper. Contains page content -->
 
-          <!-- /.box-header -->
-          <div class="box-body no-padding">
-            <div class="mailbox-read-info">
-              <h2>Undangan Kegiatan</h2>
-              <h5>Publish by : Admin FMIPA
-                <span class="mailbox-read-time pull-right">15 Feb. 2016 11:03 PM</span></h5>
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+
+      </section>
+
+  <!-- Main content -->
+      <section class="content">
+
+          <aside class="" style="float:right;width:30%">
+            <div class="">
+
+              <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Berita Terbaru</h3>
+
+                  <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="box-body no-padding">
+                  <ul class="nav nav-pills nav-stacked">
+                    <li><a href="#berita1" class="smoothScroll"> Undangan Kegiatan</a></li>
+                    <li><a href="#berita2" class="smoothScroll"> Fakultas MIPA IPB</a></li>
+                  </ul>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /. box -->
+
+              <!-- /.box -->
             </div>
-            <!-- /.mailbox-read-info -->
-            <div class="mailbox-controls with-border text-center">
-              {{-- <div class="btn-group">
-                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete">
-                  <i class="fa fa-trash-o"></i></button>
-                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
-                  <i class="fa fa-reply"></i></button>
-                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
-                  <i class="fa fa-share"></i></button>
-              </div> --}}
-              <!-- /.btn-group -->
-              {{-- <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
-                <i class="fa fa-print"></i></button> --}}
+            <!-- /.col -->
+
+          </aside>
+
+
+        <div class="row">
+
+          <div  id="berita1" class="col-md-8">
+            <div class="box box-primary">
+
+              <!-- /.box-header -->
+              <div class="box-body no-padding">
+                <div class="mailbox-read-info">
+                  <h2>Undangan Kegiatan</h2>
+                  <h5>Publish by : Admin FMIPA
+                    <span class="mailbox-read-time pull-right">15 Feb. 2016 11:03 PM</span></h5>
+                </div>
+                <!-- /.mailbox-read-info -->
+                <div class="mailbox-controls with-border text-center">
+                  {{-- <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete">
+                      <i class="fa fa-trash-o"></i></button>
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
+                      <i class="fa fa-reply"></i></button>
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
+                      <i class="fa fa-share"></i></button>
+                  </div> --}}
+                  <!-- /.btn-group -->
+                  {{-- <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
+                    <i class="fa fa-print"></i></button> --}}
+                </div>
+                <!-- /.mailbox-controls -->
+                <div class="mailbox-read-message">
+                  <div class="col-md-6">
+                    <div class="carousel-inner">
+                      <div class="item active">
+                          <img src="{{ asset('assets/img/contohsurat.jpg') }}" alt="">
+                      </div>
+                    </div>
+                  </div>
+
+                  <p>Lorem Ipsum</p>
+
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                </div>
+                <!-- /.mailbox-read-message -->
+              </div>
+
+              {{-- <!-- /.box-footer -->
+              <div class="box-footer">
+                <div class="pull-right">
+                  <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
+                  <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
+                </div>
+                <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
+                <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
+              </div>
+              <!-- /.box-footer --> --}}
             </div>
-            <!-- /.mailbox-controls -->
-            <div class="mailbox-read-message">
-              <p>Lorem Ipsum</p>
-
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-            </div>
-            <!-- /.mailbox-read-message -->
+            <!-- /. box -->
           </div>
+          <!-- /.col -->
 
-          {{-- <!-- /.box-footer -->
-          <div class="box-footer">
-            <div class="pull-right">
-              <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
-              <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
+
+          <div  id="berita2" class="col-md-8">
+            <div class="box box-primary">
+
+              <!-- /.box-header -->
+              <div class="box-body no-padding">
+                <div id="berita2" class="mailbox-read-info">
+                  <h2>Fakultas MIPA IPB - Faculty of Mathematic and Natural Sciences</h2>
+                  <h5>Publish by : Admin FMIPA
+                    <span class="mailbox-read-time pull-right">15 Feb. 2016 11:03 PM</span></h5>
+                </div>
+                <!-- /.mailbox-read-info -->
+                <div class="mailbox-controls with-border text-center">
+                  {{-- <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete">
+                      <i class="fa fa-trash-o"></i></button>
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
+                      <i class="fa fa-reply"></i></button>
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
+                      <i class="fa fa-share"></i></button>
+                  </div> --}}
+                  <!-- /.btn-group -->
+                  {{-- <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
+                    <i class="fa fa-print"></i></button> --}}
+                </div>
+                <!-- /.mailbox-controls -->
+                <div class="mailbox-read-message">
+
+                  <div class="col-md-6">
+                    <div class="carousel-inner">
+                      <div class="item active">
+                          <img id="myImg" src="{{ asset('assets/img/fmipa-pomi.jpg') }}" alt="FMIPA IPB">
+                          <!-- modal image -->
+                          <div id="myModal" class="modal">
+
+                            <!-- The Close Button -->
+                            <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+
+                            <!-- Modal Content (The Image) -->
+                            <img class="modal-content" id="img01">
+
+                            <!-- Modal Caption (Image Text) -->
+                            <div id="caption"></div>
+                          </div>
+                          <!-- / modal image -->
+                      </div>
+                    </div>
+                  </div>
+                  <p>Lorem Ipsum</p>
+
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                </div>
+                <!-- /.mailbox-read-message -->
+              </div>
+
+              {{-- <!-- /.box-footer -->
+              <div class="box-footer">
+                <div class="pull-right">
+                  <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
+                  <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
+                </div>
+                <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
+                <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
+              </div>
+              <!-- /.box-footer --> --}}
             </div>
-            <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
-            <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
+            <!-- /. box -->
           </div>
-          <!-- /.box-footer --> --}}
+          <!-- /.col -->
         </div>
-        <!-- /. box -->
-      </div>
-      <!-- /.col -->
-
-
-      <div  id="berita2" class="col-md-8">
-        <div class="box box-primary">
-
-          <!-- /.box-header -->
-          <div class="box-body no-padding">
-            <div id="berita2" class="mailbox-read-info">
-              <h2>Fakultas MIPA IPB - Faculty of Mathematic and Natural Sciences</h2>
-              <h5>Publish by : Admin FMIPA
-                <span class="mailbox-read-time pull-right">15 Feb. 2016 11:03 PM</span></h5>
-            </div>
-            <!-- /.mailbox-read-info -->
-            <div class="mailbox-controls with-border text-center">
-              {{-- <div class="btn-group">
-                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete">
-                  <i class="fa fa-trash-o"></i></button>
-                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
-                  <i class="fa fa-reply"></i></button>
-                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
-                  <i class="fa fa-share"></i></button>
-              </div> --}}
-              <!-- /.btn-group -->
-              {{-- <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
-                <i class="fa fa-print"></i></button> --}}
-            </div>
-            <!-- /.mailbox-controls -->
-            <div class="mailbox-read-message">
-              <p>Lorem Ipsum</p>
-
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-            </div>
-            <!-- /.mailbox-read-message -->
-          </div>
-
-          {{-- <!-- /.box-footer -->
-          <div class="box-footer">
-            <div class="pull-right">
-              <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
-              <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
-            </div>
-            <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
-            <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
-          </div>
-          <!-- /.box-footer --> --}}
-        </div>
-        <!-- /. box -->
-      </div>
-      <!-- /.col -->
-
-
-
+        <!-- /.row -->
+      </section>
+      <!-- /.content -->
     </div>
-    <!-- /.row -->
-  </section>
-  <!-- /.content -->
-
-
-        </div>
-
-        </div>
-    </div><!--/ .container -->
+  </div>
+</div><!--/ .container -->
 
 
 

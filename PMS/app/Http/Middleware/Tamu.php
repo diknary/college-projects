@@ -21,10 +21,15 @@ class Tamu
         if (Session::has('NIM')) {
             return redirect::to('student-dashboard');
             }
-        else if(Session::has('id')){
-            return Redirect::to('home');
+        else if(Session::has('id') && Session::get('role') == 'staff'){
+            return Redirect::to('staff-dashboard');
         }
-
+        else if(Session::has('id') && Session::get('role') == 'pd'){
+            return Redirect::to('supervisor-dashboard');
+        }
+        else if(Session::has('id') && Session::get('role') == 'admin'){
+            return Redirect::to('admin-dashboard');
+        }     
         return $next($request);
     }
 }

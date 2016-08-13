@@ -1,4 +1,4 @@
-@extends('layouts.pj')
+@extends('layouts.masters.supervisor')
 
 @section('htmlheader_title')
 	Home

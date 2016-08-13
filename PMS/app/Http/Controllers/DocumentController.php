@@ -8,12 +8,14 @@
 namespace App\Http\Controllers;
 
 use Session;
-use App\Folder;
+use App\Document;
 use App\Http\Requests;
 use App\Composer\BreadcrumbComposer;
-use App\Repositories\IdRepository;
+use App\Composer\DocumentComposer;
+use App\Repositories\BreadcrumbRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Storage;
 
 /**
@@ -34,78 +36,137 @@ class DocumentController extends Controller
      */
     protected $data;
     protected $array;
+    protected $document;
 
-    public function __construct(Request $request){
-        if(empty($request['idfolder'])){
-            $this->data = new IdRepository(0);
+    public function __construct(Request $request, DocumentComposer $document){
+        if(empty($request['iddocument'])){
+            $this->data = new BreadcrumbRepository(0);
             $this->array = $this->data->makebread();
             $breadcrumb = new BreadcrumbComposer($this->array);
             $breadcrumb->compose();
         }
         else{
-            $this->data = new IdRepository($request['idfolder']);
+            $this->data = new BreadcrumbRepository($request['iddocument']);
             $this->array = $this->data->addbread();
             $breadcrumb = new BreadcrumbComposer($this->array);
             $breadcrumb->compose();
         }
+        $document->compose();
         
     }
 
     public function supervisorfolder(Request $request)
     {
-        if(empty($request['idfolder'])){
-          $idfolder = 0;       
+        if(empty($request['iddocument'])){
+          $iddocument = 0;
         }
         else{
-          $idfolder = $request['idfolder'];
+          $iddocument = $request['iddocument'];
         }
-        $currentfolder = Folder::where('id', $idfolder)->get();
-        $folders = Folder::where('id_currentfolder', $idfolder)->get();
-        return view('supervisor.supervisor-documents', ['folders' => $folders, 'currentfolder' => $currentfolder]);
-    }
-
-
-    public function  studentfolder(Request $request)
-    {
-        if(empty($request['idfolder'])){
-          $idfolder = 0;
-        }
-        else{
-          $idfolder = $request['idfolder'];
-        }
-        $folders = Folder::where('id_currentfolder', $idfolder)
-                ->where ('hak_akses', 'public')
+        $currentdocument = Document::where('id', $iddocument)->get();
+        $folders = Document::where('id_currentfolder', $iddocument)
+                ->where('type', '=', 'folder')
+                ->orderBy('nama_document')
                 ->get();
-        return view('student.student-documents', compact('folders'));
+        $files = Document::where('id_currentfolder', $iddocument)
+                ->where('type', '<>', 'folder')
+                ->orderBy('nama_document')
+                ->get();
+
+        return view('supervisor.supervisor-documents', ['folders' => $folders, 'files' => $files, 'currentdocument' => $currentdocument]);
     }
 
+    public function adminfolder(Request $request)
+    {
+        if(empty($request['iddocument'])){
+          $iddocument = 0;
+        }
+        else{
+          $iddocument = $request['iddocument'];
+        }
+        $currentdocument = Document::where('id', $iddocument)->get();
+        $folders = Document::where('id_currentfolder', $iddocument)
+                ->where('type', '=', 'folder')
+                ->orderBy('nama_document')
+                ->get();
+        $files = Document::where('id_currentfolder', $iddocument)
+                ->where('type', '<>', 'folder')
+                ->orderBy('nama_document')
+                ->get();
+
+        return view('admin.admin-documents', ['folders' => $folders, 'files' => $files, 'currentdocument' => $currentdocument]);
+    }
+
+    public function stafffolder(Request $request)
+    {
+        if(empty($request['iddocument'])){
+          $iddocument = 0;
+        }
+        else{
+          $iddocument = $request['iddocument'];
+        }
+        $currentdocument = Document::where('id', $iddocument)->get();
+        $folders = Document::where('id_currentfolder', $iddocument)
+                ->where('type', '=', 'folder')
+                ->orderBy('nama_document')
+                ->get();
+        $files = Document::where('id_currentfolder', $iddocument)
+                ->where('type', '<>', 'folder')
+                ->orderBy('nama_document')
+                ->get();
+
+        return view('staff.staff-documents', ['folders' => $folders, 'files' => $files, 'currentdocument' => $currentdocument]);
+    }
+
+    public function studentfolder(Request $request)
+    {
+        if(empty($request['iddocument'])){
+          $iddocument = 0;
+        }
+        else{
+          $iddocument = $request['iddocument'];
+        }
+        $currentdocument = Document::where('id', $iddocument)->get();
+        $folders = Document::where('id_currentfolder', $iddocument)
+                ->where('type', '=', 'folder')
+                ->where('hak_akses', 'public')
+                ->orderBy('nama_document')
+                ->get();
+        $files = Document::where('id_currentfolder', $iddocument)
+                ->where('type', '<>', 'folder')
+                ->orderBy('nama_document')
+                ->get();
+        
+        return view('student.student-documents', ['folders' => $folders, 'files' => $files, 'currentdocument' => $currentdocument]);
+    }
 
     public function createFolder(Request $request)
     {
-      $idfolder = $request['folderid'];
-      $namefolder = $request['foldername'];
+      $iddocument = $request['documentid'];
+      $namedocument = $request['documentname'];
       $privilege = $request['privilege'];
-      $grupfolder = $request['foldergrup'];
-      $ownerfolder = $request['folderowner'];
+      $grupdocument = $request['documentgrup'];
+      $ownerdocument = $request['documentowner'];
 
-      $selectpath = Folder::where('id', $idfolder)->first();
+      $selectpath = Document::where('id', $iddocument)->first();
       $path = $selectpath->path;
-      $stringpath = $path . '/' . $namefolder;
+      $stringpath = $path . '/' . $namedocument;
 
       // code to create directory in storage folder
       if(!Storage::exists($stringpath)) {
         Storage::makeDirectory($stringpath, true);
 
-        $folder = new Folder();
+        $document = new Document();
 
-        $folder->nama_folder = $namefolder;
-        $folder->owner = $ownerfolder;
-        $folder->hak_akses = $privilege;
-        $folder->grup_folder = $grupfolder;
-        $folder->id_currentfolder = $idfolder;
-        $folder->path = $stringpath;
+        $document->nama_document = $namedocument;
+        $document->owner = $ownerdocument;
+        $document->hak_akses = $privilege;
+        $document->grup_document = $grupdocument;
+        $document->id_currentfolder = $iddocument;
+        $document->path = $stringpath;
+        $document->type = "folder";
 
-        $folder->save();
+        $document->save();
       }
       else {
         $message = "gagal";
@@ -116,51 +177,87 @@ class DocumentController extends Controller
       return redirect()->back();
     }
 
-
-    public function deleteFolder(Request $request)
+    public function deleteDocument(Request $request)
     {
-      $idfolder = $request['inputArray'];
-      $arrayNameFolder = $request['oldfoldername'];
-      $pathcurrentfolder =  $request['currentfolderpath'];
+      $iddocument = $request['inputArray'];
+      $arrayNamedocument = $request['olddocumentname'];
+      $pathcurrentdocument =  $request['currentdocumentpath'];
 
-      $arrayId = explode(",", $idfolder);
-      $arrayName = explode(",", $arrayNameFolder);
+      $arrayId = explode(",", $iddocument);
+      $arrayName = explode(",", $arrayNamedocument);
 
       $panjangArray = count($arrayId);
 
       for($i=0; $i<$panjangArray; $i++) {
-        $path = $pathcurrentfolder . '/' . $arrayName[$i];
-        Storage::deleteDirectory($path, true);
-        Folder::where('path', 'LIKE', "%$path%" )->delete();
+        $path = $pathcurrentdocument . '/' . $arrayName[$i];
+        $isfolder = Document::where('id', $arrayId[$i])
+                    ->where('type', 'folder')
+                    ->get();
+        $isfolder = count($isfolder);
+        if($isfolder){
+          Storage::deleteDirectory($path, true);
+          Document::where('path', 'LIKE', "$path%" )->delete();
+        }
+        else {
+          Storage::delete($path);
+          Document::where('path', 'LIKE', "$path%" )->delete();
+        }
       }
       return redirect()->back();
     }
 
-
-    public function renameFolder(Request $request)
+    public function renameDocument(Request $request)
     {
-      $idfolder = $request['inputArray'];
-      $newfoldername = $request['folderrename'];
-      $oldfoldername = $request['oldfoldername'];
-      $pathcurrentfolder =  $request['currentfolderpath'];
-      $path = $pathcurrentfolder . '/' . $newfoldername;
-      $oldpath = $pathcurrentfolder . '/' . $oldfoldername;
+      $iddocument = $request['inputArray'];
+      $newdocumentname = $request['documentrename'];
+      $olddocumentname = $request['olddocumentname'];
+      $pathcurrentdocument =  $request['currentdocumentpath'];
+      $path = $pathcurrentdocument . '/' . $newdocumentname;
+      $oldpath = $pathcurrentdocument . '/' . $olddocumentname;
 
       Storage::move($oldpath, $path);
-      Folder::where('id', $idfolder)->update(['nama_folder' => $newfoldername, 'path' => $path]);
+      Document::where('id', $iddocument)->update(['nama_document' => $newdocumentname, 'path' => $path]);
 
       // echo $path;
       // echo $oldpath;
       return redirect()->back();
     }
 
-    public function moveFolder(Request $request)
+    public function moveDocument(Request $request)
     {
       # code...
     }
 
-    public function uploadFile()
+    public function uploadFile(Request $request)
     {
-      # code...
+      if ($request->hasFile('fileupload')){
+        $file = $request->file('fileupload');
+        $filename = $file->getClientOriginalName();
+        $owner = $request['fileowner'];
+        $hakakses = $request['hakakses'];
+        $path_currentfolder = $request['currentdocument'];
+        $id_currentfolder = $request['id_currentfolder'];
+        // echo $filename;
+        $filePath = $path_currentfolder.'/'.$filename;
+        $upload = Storage::put($filePath, file_get_contents($file->getRealPath()));
+        if ($upload) {
+          $file = new Document();
+
+          $file->nama_document = $filename;
+          $file->owner = $owner;
+          $file->hak_akses = $hakakses;
+          $file->id_currentfolder = $id_currentfolder;
+          $file->type = "file";
+          $file->path = $filePath;
+
+          $file->save();
+
+          return redirect()->back();
+        }
+        else {
+          echo "Gagal Upload";
+        }
+      }
+      echo "Tidak Ada File";
     }
 }

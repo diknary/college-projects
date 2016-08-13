@@ -20,18 +20,26 @@ Route::group(['middleware' => 'tamu'], function(){
 	Route::post('auth', 'UserController@auth');
 });
 
+Route::group(['middleware' => 'admin'], function(){
+	Route::get('/admin-dashboard', function () {
+    return view('admin.admin-dashboard');
+	});
+	Route::get('/admin-documents/', [
+		'uses' => 'DocumentController@adminfolder',
+		'as' => 'admin-documents'
+	]);
+	Route::get('/operator-add', 'AdminController@addOperator');
+
+	Route::get('/publish-news', function () {
+    return view('admin.admin-posts');
+	});
+	Route::get('/admin-logout', 'UserController@logout');
+
+});
+
 Route::group(['middleware' => 'supervisor'], function(){
-	Route::get('/home', function () {
+	Route::get('/supervisor-dashboard', function () {
     return view('supervisor.supervisor-dashboard');
-	});
-	Route::get('/pjaudit', function () {
-    return view('supervisor.adm-documents');
-	});
-	Route::get('/mipadoc', function () {
-    return view('supervisor.mipa-documents');
-	});
-	Route::get('/documents', function () {
-    return view('supervisor.supervisor-documents');
 	});
 	Route::get('/documents/', [
 	 'uses' => 'DocumentController@supervisorfolder',
@@ -39,30 +47,30 @@ Route::group(['middleware' => 'supervisor'], function(){
 	 ]);
 	Route::get('/supervisor-logout', 'UserController@logout');
 
-	Route::get('/operator-add', function () {
-    return view('operator_add');
-	});
-
 	// folder
 	Route::post('/folder-create', [
 		'uses' => 'DocumentController@createFolder',
 		'as' => 'folder-create'
 	]);
-	Route::post('/folder-delete', [
-		'uses' => 'DocumentController@deleteFolder',
-		'as' => 'folder-delete'
+	Route::post('/document-delete', [
+		'uses' => 'DocumentController@deleteDocument',
+		'as' => 'document-delete'
 	]);
-	Route::post('/folder-move', [
+	Route::post('/document-move', [
 		'uses' => 'DocumentController@moveFolder',
-		'as' => 'folder-move'
+		'as' => 'document-move'
 	]);
-	Route::post('/folder-copy', [
+	Route::post('/document-copy', [
 		'uses' => 'DocumentController@copyFolder',
-		'as' => 'folder-copy'
+		'as' => 'document-copy'
 	]);
-	Route::post('/folder-rename', [
+	Route::post('/document-rename', [
 		'uses' => 'DocumentController@renameFolder',
-		'as' => 'folder-rename'
+		'as' => 'document-rename'
+	]);
+	Route::post('/file-upload', [
+		'uses' => 'DocumentController@uploadFile',
+		'as' => 'file-upload'
 	]);
 
 
@@ -79,10 +87,32 @@ Route::group(['middleware' => 'student'], function(){
 	Route::get('/student-upload', function () {
     return view('student.student-upload');
 	});
+	Route::post('/form-upload', [
+		'uses' => 'FormUploadController@uploadForm',
+		'as' => 'form-upload'
+	]);
+
 	Route::get('/student-logout', 'UserController@logout');
 
 });
 
+Route::group(['middleware' => 'staff'], function(){
+	Route::get('/staff-dashboard', function () {
+    return view('staff.staff-dashboard');
+	});
+	Route::get('/staff-documents/', [
+		'uses' => 'DocumentController@stafffolder',
+		'as' => 'staff-documents'
+	]);
+	
+	Route::get('/staff-logout', 'UserController@logout');
+
+});
+
+Route::get('test', function(){
+	return view('test');
+})
+;
 
 
 
