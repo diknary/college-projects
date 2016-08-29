@@ -15,7 +15,7 @@
                 <div class="pull-left info">
                     <p>{{ Session::get('studentName') }}</p>
                     <!-- Status -->
-                    <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('adminlte_lang::message.online') }}</a>
+                    <a href="#"><i class="fa fa-circle text-success"></i>Student</a>
                 </div>
             </div>
         @endif
@@ -33,10 +33,10 @@
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
-            <li class="header">Menu</li>
+            <li class="header">MENU</li>
             <!-- Optionally, you can add icons to the links -->
             <li><a href="{{ url('student-dashboard') }}"><i class='fa fa-dashboard'></i> <span>Dashboard</span></a></li>
-            <li><a href="{{ url('student-documents') }}"><i class='fa fa-book'></i> <span>Documents</span></a></li>
+            <li><a href="{{ url('student/documents') }}"><i class='fa fa-book'></i> <span>Documents</span></a></li>
             <li><a href="{{ url('student-upload') }}"><i class='fa fa-upload'></i> <span>Upload</span></a></li>
         </ul><!-- /.sidebar-menu -->
     </section>

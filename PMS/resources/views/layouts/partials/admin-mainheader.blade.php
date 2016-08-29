@@ -4,9 +4,9 @@
     <!-- Logo -->
     <a href="{{ url('/home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>P</b>MS</span>
+        <span class="logo-mini"><b>S</b>MM</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Portal Management System</b>Administrator</span>
+        <span class="logo-lg"><b>SMM FMIPA</b></span>
     </a>
 
     <!-- Header Navbar -->

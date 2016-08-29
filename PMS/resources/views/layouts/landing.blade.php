@@ -142,8 +142,6 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     </div><!-- /container -->
 </div>
 
-
-
 <!-- FEATURES WRAP -->
 <div id="news">
   <div class="container">
@@ -161,11 +159,9 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
 
           <aside class="" style="float:right;width:30%">
             <div class="">
-
               <div class="box box-solid">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Berita Terbaru</h3>
-
+                  <h3 class="box-title"><strong style="color:#1c1c1c"></strong>Berita Terbaru</h3>
                   <div class="box-tools">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
@@ -173,155 +169,52 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                 </div>
                 <div class="box-body no-padding">
                   <ul class="nav nav-pills nav-stacked">
-                    <li><a href="#berita1" class="smoothScroll"> Undangan Kegiatan</a></li>
-                    <li><a href="#berita2" class="smoothScroll"> Fakultas MIPA IPB</a></li>
+                    @foreach ($latestnews as $latestnew)
+                      <li><a href="#{{ $latestnew->id }}" class="smoothScroll"> {{ $latestnew->news_title }}</a></li>
+                    @endforeach
                   </ul>
                 </div>
                 <!-- /.box-body -->
               </div>
-              <!-- /. box -->
-
               <!-- /.box -->
             </div>
             <!-- /.col -->
-
           </aside>
 
-
-        <div class="row">
-
-          <div  id="berita1" class="col-md-8">
-            <div class="box box-primary">
-
-              <!-- /.box-header -->
-              <div class="box-body no-padding">
-                <div class="mailbox-read-info">
-                  <h2>Undangan Kegiatan</h2>
-                  <h5>Publish by : Admin FMIPA
-                    <span class="mailbox-read-time pull-right">15 Feb. 2016 11:03 PM</span></h5>
-                </div>
-                <!-- /.mailbox-read-info -->
-                <div class="mailbox-controls with-border text-center">
-                  {{-- <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete">
-                      <i class="fa fa-trash-o"></i></button>
-                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
-                      <i class="fa fa-reply"></i></button>
-                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
-                      <i class="fa fa-share"></i></button>
-                  </div> --}}
-                  <!-- /.btn-group -->
-                  {{-- <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
-                    <i class="fa fa-print"></i></button> --}}
-                </div>
-                <!-- /.mailbox-controls -->
-                <div class="mailbox-read-message">
-                  <div class="col-md-6">
-                    <div class="carousel-inner">
-                      <div class="item active">
-                          <img src="{{ asset('assets/img/contohsurat.jpg') }}" alt="">
+        @foreach($news as $new)
+          <div class="row">
+            <div id="{{ $new->id }}" class="col-md-8">
+              <div class="box box-primary">
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                  <div class="mailbox-read-info">
+                    <h2 style="text-align: center">{{ $new->news_title }}</h2>
+                    <h5>Publish by : {{ $new->username }}
+                      <span class="mailbox-read-time pull-right">{{ $new->created_at->format('d/m/Y')}}</span>
+                    </h5>
+                  </div>
+                  <!-- /.mailbox-controls -->
+                  <div class="mailbox-read-message">
+                    <div class="col-md-6">
+                      <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="{{ asset('storage/app'.'/'.$new->image_path) }}" alt="">
+                        </div>
                       </div>
                     </div>
+                    <p style="white-space: pre-wrap">
+                      {{ $new->news_body }}
+                    </p>
                   </div>
-
-                  <p>Lorem Ipsum</p>
-
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
+                  <!-- /.mailbox-read-message -->
                 </div>
-                <!-- /.mailbox-read-message -->
+                <!-- /.box-footer -->
               </div>
-
-              {{-- <!-- /.box-footer -->
-              <div class="box-footer">
-                <div class="pull-right">
-                  <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
-                  <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
-                </div>
-                <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
-                <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
-              </div>
-              <!-- /.box-footer --> --}}
+              <!-- /. box -->
             </div>
-            <!-- /. box -->
+            <!-- /.col -->
           </div>
-          <!-- /.col -->
-
-
-          <div  id="berita2" class="col-md-8">
-            <div class="box box-primary">
-
-              <!-- /.box-header -->
-              <div class="box-body no-padding">
-                <div id="berita2" class="mailbox-read-info">
-                  <h2>Fakultas MIPA IPB - Faculty of Mathematic and Natural Sciences</h2>
-                  <h5>Publish by : Admin FMIPA
-                    <span class="mailbox-read-time pull-right">15 Feb. 2016 11:03 PM</span></h5>
-                </div>
-                <!-- /.mailbox-read-info -->
-                <div class="mailbox-controls with-border text-center">
-                  {{-- <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete">
-                      <i class="fa fa-trash-o"></i></button>
-                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
-                      <i class="fa fa-reply"></i></button>
-                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
-                      <i class="fa fa-share"></i></button>
-                  </div> --}}
-                  <!-- /.btn-group -->
-                  {{-- <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
-                    <i class="fa fa-print"></i></button> --}}
-                </div>
-                <!-- /.mailbox-controls -->
-                <div class="mailbox-read-message">
-
-                  <div class="col-md-6">
-                    <div class="carousel-inner">
-                      <div class="item active">
-                          <img id="myImg" src="{{ asset('assets/img/fmipa-pomi.jpg') }}" alt="FMIPA IPB">
-                          <!-- modal image -->
-                          <div id="myModal" class="modal">
-
-                            <!-- The Close Button -->
-                            <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
-
-                            <!-- Modal Content (The Image) -->
-                            <img class="modal-content" id="img01">
-
-                            <!-- Modal Caption (Image Text) -->
-                            <div id="caption"></div>
-                          </div>
-                          <!-- / modal image -->
-                      </div>
-                    </div>
-                  </div>
-                  <p>Lorem Ipsum</p>
-
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                </div>
-                <!-- /.mailbox-read-message -->
-              </div>
-
-              {{-- <!-- /.box-footer -->
-              <div class="box-footer">
-                <div class="pull-right">
-                  <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
-                  <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
-                </div>
-                <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
-                <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
-              </div>
-              <!-- /.box-footer --> --}}
-            </div>
-            <!-- /. box -->
-          </div>
-          <!-- /.col -->
-        </div>
+        @endforeach
         <!-- /.row -->
       </section>
       <!-- /.content -->

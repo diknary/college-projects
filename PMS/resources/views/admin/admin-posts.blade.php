@@ -10,32 +10,34 @@
 		<div class="col-md-10 col-md-offset-0">
 			<div class="panel panel-default">
 				<div class="box box-primary">
-					<form class="" action="" method="post" enctype="multipart/form-data">
+					<form class="" action="{{ route('news-post') }}" method="post" enctype="multipart/form-data">
 						<div class="box-header with-border">
 							<h3 class="box-title">Post Berita</h3>
 						</div>
 						<div class="box-body">
 							<!-- Hidden input -->
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
-							<input type="hidden" name="username" id="username" value="{{ Session::get('supervisorName') }}">
+							<input type="hidden" name="username" id="username" value="{{ Session::get('staffName') }}">
 							<!-- / hidden input -->
 	            <div class="form-group">
-	              <input class="form-control" placeholder="Judul" name="title">
+								<label for="posttitle">Judul :</label>
+	              <input class="form-control" name="title">
 	            </div>
 	            <div class="form-group">
-	              <textarea id="compose-textarea" class="form-control" style="height: 300px" name="body"></textarea>
+								<label for="postbody">Isi :</label>
+								<p>
+									<textarea id="compose-textarea" class="form-control" style="height: 300px" name="body"></textarea>
+								</p>
 	            </div>
 	            <div class="form-group">
-	              <div class="btn btn-default btn-file">
-	                <i class="fa fa-image"></i> Add Image
-	                <input type="file" name="image" accept="image/*">
-	              </div>
+								<label for="" class="control-label">Gambar :</label>
+								<input type="file" name="image" accept="image/*">
 	            </div>
 	          </div>
 						<div class="box-footer">
 	            <div class="pull-right">
-	              <button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Draft</button>
-	              <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Send</button>
+	              <input type="submit" class="btn btn-default" name="draft" value="Draft">
+	              <input type="submit" class="btn btn-primary" name="post" value="Post">
 	            </div>
 	          </div>
 					</form>

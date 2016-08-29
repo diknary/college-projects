@@ -14,17 +14,17 @@
                 </div>
                 <div class="pull-left info">
                     <p>{{ Session::get('staffName') }}</p>
-                      <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('adminlte_lang::message.online') }}</a>
+                      <a href="#"><i class="fa fa-circle text-success"></i>Staff</a>
                 </div>
             </div>
         @endif
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
-            <li class="header">{{ trans('adminlte_lang::message.header') }}</li>
+            <li class="header">MENU</li>
             <!-- Optionally, you can add icons to the links -->
             <li><a href="{{ url('staff-dashboard') }}"><i class='fa fa-history'></i> <span>Recent</span></a></li>
-            <li><a href="{{ url('staff-documents') }}"><i class='fa fa-book'></i> <span>Documents</span></a></li>
+            <li><a href="{{ url('staff/documents') }}"><i class='fa fa-book'></i> <span>Documents</span></a></li>
 
         </ul><!-- /.sidebar-menu -->
     </section>

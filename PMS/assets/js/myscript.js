@@ -1,15 +1,23 @@
 // javascript for show/hide button in supervisor-document
-// $(function () {
-//       $("#example1").DataTable();
-//       $('#example2').DataTable({
-//         "paging": true,
-//         "lengthChange": false,
-//         "searching": false,
-//         "ordering": true,
-//         "info": true,
-//         "autoWidth": false
-//       });
-// });
+$(document).ready(function() {
+    $('#doctable').DataTable();
+    $('#doctable2').DataTable({
+      "paging": false,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false
+    });
+    $('#doctable3').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false
+    });
+});
 
 $(function () {
   $(".select2").select2();
@@ -24,7 +32,7 @@ jQuery(function ($) {
               collapseSpeed: 1000,
               multiFolder: false
             }, function(file) {
-                window.location = file;
+                alert(file);
             });
             });
     });
@@ -39,24 +47,30 @@ $(document).ready(function(){
       nameCheckedDocument.push(this.id);
       if(checkedArray.length == 1) {
         $(".deleteButton").show();
-        $(".moveButton").show();
+        $(".cutButton").show();
         $(".copyButton").show();
         $(".renameButton").show();
+        $(".updateButton").show();
         $(".newButton").hide();
+        $(".pasteButton").hide();
       }
       else if (checkedArray.length > 1){
         $(".deleteButton").show();
-        $(".moveButton").show();
+        $(".cutButton").show();
         $(".copyButton").show();
         $(".renameButton").hide();
+        $(".updateButton").hide();
         $(".newButton").hide();
+        $(".pasteButton").hide();
       }
       else {
         $(".newButton").show();
+        $(".pasteButton").show();
         $(".deleteButton").hide();
-        $(".moveButton").hide();
+        $(".cutButton").hide();
         $(".copyButton").hide();
         $(".renameButton").hide();
+        $(".updateButton").hide();
       }
     }
     else{
@@ -64,24 +78,30 @@ $(document).ready(function(){
       nameCheckedDocument.splice(nameCheckedDocument.indexOf(this.id), 1);
       if(checkedArray.length == 1) {
         $(".deleteButton").show();
-        $(".moveButton").show();
+        $(".cutButton").show();
         $(".copyButton").show();
         $(".renameButton").show();
+        $(".updateButton").show();
         $(".newButton").hide();
+        $(".pasteButton").hide();
       }
       else if (checkedArray.length > 1){
         $(".deleteButton").show();
-        $(".moveButton").show();
+        $(".cutButton").show();
         $(".copyButton").show();
         $(".renameButton").hide();
+        $(".updateButton").hide();
         $(".newButton").hide();
+        $(".pasteButton").hide();
       }
       else {
         $(".newButton").show();
+        $(".pasteButton").show();
         $(".deleteButton").hide();
-        $(".moveButton").hide();
+        $(".cutButton").hide();
         $(".copyButton").hide();
         $(".renameButton").hide();
+        $(".updateButton").hide();
       }
     }
     updateValue(checkedArray);
@@ -89,12 +109,14 @@ $(document).ready(function(){
 
   function updateValue(checkedArray){
     document.getElementById('inputDelete').value=checkedArray;
-    document.getElementById('inputMove').value=checkedArray;
+    document.getElementById('inputCut').value=checkedArray;
     document.getElementById('inputCopy').value=checkedArray;
     document.getElementById('inputRename').value=checkedArray;
+    document.getElementById('inputUpdate').value=checkedArray;
     document.getElementById('documentrename').value=nameCheckedDocument;
     document.getElementById('olddocumentname').value=nameCheckedDocument;
     document.getElementById('olddocumentname1').value=nameCheckedDocument;
+    document.getElementById('olddocumentname2').value=nameCheckedDocument;
   }
 
 //   $("tr").on("click",function(event) {
@@ -112,14 +134,14 @@ $(document).ready(function(){
 //         nameCheckedFolder.push(this.id);
 //         if(checkedArray.length == 1) {
 //           $(".deleteButton").show();
-//           $(".moveButton").show();
+//           $(".cutButton").show();
 //           $(".copyButton").show();
 //           $(".renameButton").show();
 //           $(".newButton").hide();
 //         }
 //         else if (checkedArray.length > 1){
 //           $(".deleteButton").show();
-//           $(".moveButton").show();
+//           $(".cutButton").show();
 //           $(".copyButton").show();
 //           $(".renameButton").hide();
 //           $(".newButton").hide();
@@ -127,7 +149,7 @@ $(document).ready(function(){
 //         else {
 //           $(".newButton").show();
 //           $(".deleteButton").hide();
-//           $(".moveButton").hide();
+//           $(".cutButton").hide();
 //           $(".copyButton").hide();
 //           $(".renameButton").hide();
 //         }
@@ -138,14 +160,14 @@ $(document).ready(function(){
 //         nameCheckedFolder.splice(nameCheckedFolder.indexOf(this.id), 1);
 //         if(checkedArray.length == 1) {
 //           $(".deleteButton").show();
-//           $(".moveButton").show();
+//           $(".cutButton").show();
 //           $(".copyButton").show();
 //           $(".renameButton").show();
 //           $(".newButton").hide();
 //         }
 //         else if (checkedArray.length > 1){
 //           $(".deleteButton").show();
-//           $(".moveButton").show();
+//           $(".cutButton").show();
 //           $(".copyButton").show();
 //           $(".renameButton").hide();
 //           $(".newButton").hide();
@@ -153,7 +175,7 @@ $(document).ready(function(){
 //         else {
 //           $(".newButton").show();
 //           $(".deleteButton").hide();
-//           $(".moveButton").hide();
+//           $(".cutButton").hide();
 //           $(".copyButton").hide();
 //           $(".renameButton").hide();
 //         }
@@ -162,7 +184,6 @@ $(document).ready(function(){
 
 
 });
-
 // javascript for upload form
 $(document).ready(function(){
 

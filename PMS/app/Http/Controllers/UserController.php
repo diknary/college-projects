@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use Session;
 use App\User;
+use App\Breadcrumb;
 use App\Http\Controllers\Input;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -34,14 +35,7 @@ class UserController extends Controller
      */
     public function auth(Request $request)
     {
-        /*$validation = Validator::make($request->all(), [
-            'username' => 'required|exist:users,username',
-            'password' => 'required|confirmed',
-            ]);
-        if($validation->fails()){
-            return Redirect::to('login')->withErrors($validation);
-        }
-        else{*/
+        
                 $username = $request->input('username');
                 $password = $request->input('password');
                 $user = array(
@@ -50,7 +44,7 @@ class UserController extends Controller
                 );
                 $user_string = json_encode($user);
 
-                $ch = curl_init('http://greentransport.ipb.ac.id/api/simak');
+                $ch = curl_init('http://agricode.cs.ipb.ac.id/ivan/login.php');
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $user_string);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -60,23 +54,27 @@ class UserController extends Controller
                 $result = json_decode($exec);
 
                 if(empty($result)){
-                    $get = User::where('username', $username)->first();
-                    if($get->role == 'pd'){
-                        Session::put(['id' => $get->username, 'staffName' => $get->name, 'departemen' => $get->departemen, 'role' => $get->role]);
-                        return Redirect::to('supervisor-dashboard');
+                    $validation = Validator::make($request->all(), [
+                        'username' => 'required|exists:users,username',
+                        'password' => 'required|exists:users,password'
+                        ]);
+                    if($validation->fails()){
+                        return Redirect::to('login')->withErrors($validation);
                     }
-                    elseif($get->role == 'admin'){
-                        Session::put(['id' => $get->username, 'staffName' => $get->name, 'departemen' => $get->departemen, 'role' => $get->role]);
-                        return Redirect::to('admin-dashboard');
-                    }
-                    elseif ($get->role == 'staff'){
-                        Session::put(['id' => $get->username, 'staffName' => $get->name, 'departemen' => $get->departemen, 'role' => $get->role]);
-                        return Redirect::to('staff-dashboard');
-                    }
-                    else
-                        {
-                        Session::put(['NIM' => $get->username, 'studentName' => $get->name]);
-                        return Redirect::to('student-dashboard');
+                    else{
+                        $get = User::where('username', $username)->first(); 
+                            if($get->role == 'pd'){
+                            Session::put(['id' => $get->username, 'staffName' => $get->name, 'departemen' => $get->departemen, 'role' => $get->role]);
+                            return Redirect::to('supervisor-dashboard');
+                        }
+                        elseif($get->role == 'admin'){
+                            Session::put(['id' => $get->username, 'staffName' => $get->name, 'departemen' => $get->departemen, 'role' => $get->role]);
+                            return Redirect::to('admin-dashboard');
+                        }
+                        elseif ($get->role == 'staff'){
+                            Session::put(['id' => $get->username, 'staffName' => $get->name, 'departemen' => $get->departemen, 'role' => $get->role]);
+                            return Redirect::to('staff-dashboard');
+                        }
                     }
                 }
                 else{
@@ -84,11 +82,12 @@ class UserController extends Controller
                     Session::put(['NIM' => $result->nim, 'studentName' => $result->nama]);
                     return Redirect::to('student-dashboard');
                   }
-        /*}*/
     }
 
     public function logout()
     {
+
+       Breadcrumb::where('user_session', Session::get('id'))->delete();
        Session::flush();
        return Redirect::to('/');
     }

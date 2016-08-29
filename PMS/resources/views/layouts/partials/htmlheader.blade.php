@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title> PMS - @yield('htmlheader_title', 'Your title here') </title>
+    <title> PMS - @yield('htmlheader_title') </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
@@ -16,8 +16,8 @@
     -->
     <link href="{{ asset('assets/css/skins/skin-blue.css') }}" rel="stylesheet" type="text/css" />
     <!-- iCheck -->
-    <link href="{{ asset('assets/plugins/iCheck/square/blue.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/iCheck/all.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/plugins/iCheck/flat/blue.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/filetree/jqueryFileTree.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />

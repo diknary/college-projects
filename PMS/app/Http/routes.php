@@ -11,9 +11,10 @@
 |
 */
 Route::group(['middleware' => 'tamu'], function(){
-	Route::get('/', function () {
-    return view('welcome');
-	});
+	Route::get('/', [
+		'uses' => 'AdminController@getNews',
+		'as' => 'welcome'
+	]);
 	Route::get('/login', function () {
     return view('auth.login');
 	});
@@ -21,29 +22,59 @@ Route::group(['middleware' => 'tamu'], function(){
 });
 
 Route::group(['middleware' => 'admin'], function(){
-	Route::get('/admin-dashboard', function () {
-    return view('admin.admin-dashboard');
-	});
-	Route::get('/admin-documents/', [
+	Route::get('/admin-dashboard', 'ActivityController@adminactivity');
+	Route::get('admin/documents', [
 		'uses' => 'DocumentController@adminfolder',
-		'as' => 'admin-documents'
+		'as' => 'admin/documents'
 	]);
 	Route::get('/operator-add', 'AdminController@addOperator');
-
 	Route::get('/publish-news', function () {
     return view('admin.admin-posts');
 	});
+	Route::post('/news-post', [
+		'uses' => 'AdminController@postNews',
+		'as' => 'news-post'
+	]);
+	Route::get('/admin-logout', 'UserController@logout');
+
+	Route::get('/draft-news', [
+		'uses' => 'AdminController@getDraft',
+		'as' => 'draft-news'
+	]);
+	Route::get('/list-news', [
+		'uses' => 'AdminController@getNewsList',
+		'as' => 'list-news'
+		]);
+	Route::get('/delete-news', [
+		'uses' => 'AdminController@deleteNews',
+		'as' => 'delete-news'
+	]);
+	Route::get('/edit-news', [
+		'uses' => 'AdminController@editNews',
+		'as' => 'edit-news'
+	]);
+	Route::post('/save-news', [
+		'uses' => 'AdminController@saveNews',
+		'as' => 'save-news'
+	]);
+	Route::get('/services', [
+		'uses' => 'AdminController@services',
+		'as' => 'services'
+	]);
+	Route::post('/change-status', [
+		'uses' => 'AdminController@changeStatus',
+		'as' => 'change-status'
+	]);
+	
 	Route::get('/admin-logout', 'UserController@logout');
 
 });
 
 Route::group(['middleware' => 'supervisor'], function(){
-	Route::get('/supervisor-dashboard', function () {
-    return view('supervisor.supervisor-dashboard');
-	});
-	Route::get('/documents/', [
+	Route::get('/supervisor-dashboard', 'ActivityController@supervisoractivity');
+	Route::get('supervisor/documents', [
 	 'uses' => 'DocumentController@supervisorfolder',
-	 'as'   => 'supervisor-documents'
+	 'as'   => 'supervisor/documents'
 	 ]);
 	Route::get('/supervisor-logout', 'UserController@logout');
 
@@ -56,17 +87,29 @@ Route::group(['middleware' => 'supervisor'], function(){
 		'uses' => 'DocumentController@deleteDocument',
 		'as' => 'document-delete'
 	]);
-	Route::post('/document-move', [
-		'uses' => 'DocumentController@moveFolder',
-		'as' => 'document-move'
-	]);
 	Route::post('/document-copy', [
-		'uses' => 'DocumentController@copyFolder',
+		'uses' => 'DocumentController@copyDocument',
 		'as' => 'document-copy'
 	]);
+	Route::post('/document-paste', [
+		'uses' => 'DocumentController@pasteDocument',
+		'as' => 'document-paste'
+	]);
+	Route::post('/document-cut', [
+		'uses' => 'DocumentController@cutDocument',
+		'as' => 'document-cut'
+	]);
+	Route::post('/document-place', [
+		'uses' => 'DocumentController@placeDocument',
+		'as' => 'document-place'
+	]);
 	Route::post('/document-rename', [
-		'uses' => 'DocumentController@renameFolder',
+		'uses' => 'DocumentController@renameDocument',
 		'as' => 'document-rename'
+	]);
+	Route::post('/document-update', [
+		'uses' => 'DocumentController@updateDoc',
+		'as' => 'document-update'
 	]);
 	Route::post('/file-upload', [
 		'uses' => 'DocumentController@uploadFile',
@@ -77,12 +120,13 @@ Route::group(['middleware' => 'supervisor'], function(){
 });
 
 Route::group(['middleware' => 'student'], function(){
-	Route::get('/student-dashboard', function () {
-    return view('student.student-dashboard');
-	});
-	Route::get('/student-documents/', [
+	Route::get('/student-dashboard', [
+		'uses' => 'FormUploadController@studentDashboard',
+		'as' => 'student-dashboard'
+	]);
+	Route::get('/student/documents/', [
 		'uses' => 'DocumentController@studentfolder',
-		'as' => 'student-documents'
+		'as' => 'student/documents'
 	]);
 	Route::get('/student-upload', function () {
     return view('student.student-upload');
@@ -100,9 +144,9 @@ Route::group(['middleware' => 'staff'], function(){
 	Route::get('/staff-dashboard', function () {
     return view('staff.staff-dashboard');
 	});
-	Route::get('/staff-documents/', [
+	Route::get('/staff/documents/', [
 		'uses' => 'DocumentController@stafffolder',
-		'as' => 'staff-documents'
+		'as' => 'staff/documents'
 	]);
 	
 	Route::get('/staff-logout', 'UserController@logout');
@@ -111,8 +155,7 @@ Route::group(['middleware' => 'staff'], function(){
 
 Route::get('test', function(){
 	return view('test');
-})
-;
+});
 
 
 

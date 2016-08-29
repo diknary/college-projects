@@ -15,6 +15,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 class FormUploadController extends Controller
@@ -42,11 +43,11 @@ class FormUploadController extends Controller
         $form->nim = $request['nim'];
         $form->nama_form = $request['kategori-form'];
         $form->status = "Telah diupload";
-        $form->file_name = $filename;
+        $form->file_path = "storage/app/StudentUpload/Uploaded/".$filename;
 
         $form->save();
       }
-      return Redirect::to('student-dashboard');
+      return redirect()->route('student-dashboard');
     }
     echo "Tidak ada file";
   }
@@ -56,6 +57,6 @@ class FormUploadController extends Controller
     $user = Session::get('NIM');
     $forms = Studentuploadform::where('nim', $user)->orderBy('created_at', 'desc')->get();
 
-    return view('student.student-dashboard', ['forms' => $forms]);
+    return view('student.student-dashboard', ['forms' => $forms, 'count' => 1]);
   }
 }

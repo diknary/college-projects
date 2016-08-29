@@ -6,7 +6,8 @@
 
 
 @section('main-content')
-	<div class="col-xs-12">
+<div class="row">	
+  <div class="col-xs-12">
           <div class="box">
             @foreach ($currentdocument as $current)
             <div class="box-header">
@@ -14,18 +15,20 @@
             </div>
             @endforeach
 
-            <div class="box-body table-responsive no-padding">
-              <table id="example1" class="table table-bordered table-striped">
-                <tbody>
+            <div class="box-body">
+              <table id="doctable" class="table table-bordered table-striped">
+                <thead>
                 <tr>
                   <th>Name</th>
                   <th>Owner</th>
                   <th>Last Modified</th>
                 </tr>
+                </thead>
+                <tbody>
                 @foreach($folders as $folder)
                     <tr>
                       <td><i class='fa fa-folder'></i>
-                      <a id="golink" href="{{ route('staff-documents', ['iddocument' => $folder->id]) }}">{{ $folder->nama_document }}</a></td>
+                      <a id="golink" href="{{ route('staff/documents', ['iddocument' => $folder->id]) }}">{{ $folder->nama_document }}</a></td>
                       <td>{{ $folder->owner }}</td>
                       <td>{{ $folder->updated_at->format('d/m/Y') }}</td>
                     </tr>
@@ -45,4 +48,5 @@
           </div>
           <!-- /.box -->
         </div>
+  </div>
 @endsection

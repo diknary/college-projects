@@ -6,18 +6,40 @@
 
 
 @section('main-content')
+<div class="row">
 	<div class="col-xs-12">
-          <div class="box">
+		
+		@if(Session::has('warning'))
+			<div class="alert alert-danger alert-dismissible">
+			  <button type="button" class="close" data-dismiss="alert">
+			  	x
+			  </button>
+				{{ Session::get('warning') }}
+			</div>
+			@endif
+
+			@if(Session::has('alert'))
+			<div class="alert alert-success alert-dismissible">
+			  <button type="button" class="close" data-dismiss="alert">
+			  	x
+			  </button>
+				{{ Session::get('alert') }}
+			</div>
+			@endif
+
+
+          	<div class="box">
 
 						@foreach ($currentdocument as $current)
 						<div class="box-header">
-              <h3 class="box-title">{{ $current->nama_document}}</h3>
-            </div>
+              				<h3 class="box-title">{{ $current->nama_document}}</h3>
+            			</div>
 
 						@if(Session::get('departemen') == $current->grup_document)
 							<!-- button new folder & file -->
 							<div class="box-header">
 								 <div class="margin">
+								     <!--new Button -->
 									 <div id="newButt" class="btn-group newButton" style='display:show'>
 										 <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp New</button>
 										 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -30,32 +52,59 @@
 										 </ul>
 									 </div>
 
+									 @if(Session::has('clipboard'))
+									 <!-- paste button -->
+									 <div id="pasteButton" class="btn-group pasteButton" style='display:show'>
+										 <form action="{{ route('document-paste') }}" method="post">
+											<!-- input hidden -->
+											<input type="hidden" name="_token" value="{{ csrf_token() }}">
+	 										<input type="hidden" class="form-control" name="documentid" value="{{ $current->id }}">
+											 <input type="hidden" class="form-control" name="foldergrup" value="{{ $current->grup_folder }}">
+	 										<input type="hidden" class="form-control" name="currentdocumentpath" value="{{ $current->path }}">
+											<!-- close input hidden -->
+	 										<button type="submit" href="" class="btn btn-primary"><i class="fa fa-paste"></i>&nbsp Paste</button>
+										 </form>
+									</div>
+									@endif
+
 									 <!-- delete button -->
-									 <form id="deleteButton" class="btn-group deleteButton" action="{{ route('document-delete') }}" method="post" style="display:none">
-										<!-- input hidden -->
-										<input type="hidden" name="_token" value="{{ csrf_token() }}">
- 										<input type="hidden" class="form-control" name="inputArray" id="inputDelete">
- 										<input type="hidden" class="form-control" name="currentdocumentpath" value="{{ $current->path }}">
- 										<input type="hidden" class="form-control" name="olddocumentname"id="olddocumentname">
-										<!-- close input hidden -->
- 										<button type="submit" href="" class="btn btn-primary"><i class="fa fa-trash"></i>&nbsp Delete</button>
-									 </form>
-									 <!-- move button -->
-									 <form id="moveButton" class="btn-group moveButton" action="" method="post" style="display:none">
-										<input type="hidden" name="_token" value="{{ csrf_token() }}">
-										<input id="inputMove" type="text" name="inputArray" value="" hidden>
- 										<button type="button" data-toggle="modal" data-target="#moveDocument" class="btn btn-primary"><i class="fa fa-sign-out"></i>&nbsp Move</button>
-									 </form>
+									 <div id="deleteButton" class="btn-group deleteButton" style="display:none">
+										 <form action="{{ route('document-delete') }}" method="post">
+											<!-- input hidden -->
+											<input type="hidden" name="_token" value="{{ csrf_token() }}">
+	 										<input type="hidden" class="form-control" name="inputArray" id="inputDelete">
+	 										<input type="hidden" class="form-control" name="currentdocumentpath" value="{{ $current->path }}">
+	 										<input type="hidden" class="form-control" name="olddocumentname" id="olddocumentname">
+											<!-- close input hidden -->
+	 										<button type="submit" href="" class="btn btn-primary"><i class="fa fa-trash"></i>&nbsp Delete</button>
+										 </form>
+									</div>
+
+									<!-- cut button -->
+									<div id="cutButton" class="btn-group cutButton" style="display:none">
+										 <form action="{{ route('document-cut')}}" method="post">
+											<input type="hidden" name="_token" value="{{ csrf_token() }}">
+											<input type="hidden" class="form-control" name="inputArray" id="inputCut">
+	 										<button type="submit" class="btn btn-primary"><i class="fa fa-cut"></i>&nbsp Cut</button>
+										 </form>
+									</div>
+
 									 <!-- copy button -->
-									 <form id="copyButton" class="btn-group copyButton" action="" method="post" style="display:none">
-										<input type="hidden" name="_token" value="{{ csrf_token() }}">
-										<input id="inputCopy" type="text" name="inputArray" value="" hidden>
-										<button type="submit" class="btn btn-primary"><i class="fa fa-copy"></i>&nbsp Copy</button>
-									 </form>
+									 <div id="copyButton" class="btn-group copyButton" style="display:none">
+										 <form  action="{{ route('document-copy')}}" method="post">
+											<input type="hidden" name="_token" value="{{ csrf_token() }}">
+											<input type="hidden" class="form-control" name="inputArray" id="inputCopy">
+											<button type="submit" class="btn btn-primary"><i class="fa fa-copy"></i>&nbsp Copy</button>
+										 </form>
+									</div>
 									 <!-- rename button -->
 									 <div id="renameButton" class="btn-group renameButton"  style="display:none">
 										<button data-toggle="modal" data-target="#renameDocument" type="button" class="btn btn-primary"><i class="fa fa-edit"></i>&nbsp Rename</button>
-									</div>
+									 </div>
+									 <!-- update button -->
+									 <div id="updateButton" class="btn-group updateButton"  style="display:none">
+										<button data-toggle="modal" data-target="#updateDocument" type="button" class="btn btn-primary"><i class="fa fa-refresh"></i>&nbsp Update</button>
+									 </div>
 
 								 </div>
 						 	</div>
@@ -75,7 +124,7 @@
 										 <!-- Hidden input -->
 										 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 										 <input type="hidden" class="form-control" name="documentid" id="documentid" value="{{ $current->id }}">
-										 {{-- <input type="hidden" class="form-control" name="foldergrup" id="foldergrup" value="{{ $current->grup_folder }}"> --}}
+										 <input type="hidden" class="form-control" name="foldergrup" id="foldergrup" value="{{ $current->grup_folder }}">
 										 <input type="hidden" class="form-control" name="documentowner" id="documentowner" value="{{ Session::get('staffName') }}">
 										 <!-- End hidden input -->
 
@@ -198,7 +247,7 @@
 										 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 										 <input type="hidden" class="form-control" name="inputArray" id="inputRename">
 										 <input type="hidden" class="form-control" name="currentdocumentpath" value="{{ $current->path }}">
-										 <input type="hidden" class="form-control" name="olddocumentname"id="olddocumentname1">
+										 <input type="hidden" class="form-control" name="olddocumentname" id="olddocumentname1">
 										 <!-- End hidden input -->
 										 <div class="form-group">
 											 <label for="documentname">Folder Name</label>
@@ -215,34 +264,81 @@
 							 </div>
 						 </div>
 					 </div>
+					 <!-- update Dodal -->
+					 <div class="modal fade" id="updateDocument" tabindex="-1"  aria-labelledby="myModalLabel">
+						 <div class="modal-dialog">
+							 <div class="modal-content">
+								 <form action="{{ route('document-update') }}" method="post" enctype="multipart/form-data">
+									 <div class="modal-header">
+										 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										 <h4 class="modal-title" id="myModalLabel">Update Documents</h4>
+									 </div>
+									 <div class="modal-body">
+										<input type="hidden" name="_token" value="{{ csrf_token() }}">
+										<input type="hidden" class="form-control" name="inputArray" id="inputUpdate">
+										<input type="hidden" name="fileowner" id="documentowner" value="{{ Session::get('staffName') }}">
+										<input type="hidden" class="form-control" name="currentdocumentpath" value="{{ $current->path }}">
+										<input type="hidden" name="hakakses" value="{{ $current->hak_akses }}">
+										<input type="hidden" class="form-control" name="documentgrup" value="{{ $current->grup_document }}">
+										<input type="hidden" name="id_currentfolder" value="{{ $current->id }}">
+										<input type="hidden" class="form-control" name="olddocumentname" id="olddocumentname2">
+
+										<div class="form-group">
+										<label for="updatefile">Upload New File</label>
+										<input type="file" class="form-control" name="updatefile">
+									    </div>
+									 </div>
+									 <div class="modal-footer">
+										 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										 <button type="submit" class="btn btn-primary">Update</button>
+									 </div>
+									 
+								 </form>
+
+							 </div>
+						 </div>
+					 </div>
 				 @endif
 			 @endforeach
 
             <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table id="example1" class="table table-bordered table-striped">
-                <tbody>
+            <div class="box-body">
+              <table id="doctable2" class="table table-bordered table-striped">
+                <thead>
                 <tr>
-				  <th style="width: 10px"></th>
+				  <th style="width: 1px"></th>
                   <th>Name</th>
                   <th>Owner</th>
                   <th>Last Modified</th>
                 </tr>
+                </thead>
+                <tbody>
+                				@foreach ($currentdocument as $current)
+                					@if ($current->id_currentfolder <> 0)
+                					<tr>
+											<td><a href="{{ route('supervisor/documents', ['iddocument' => $current->id_currentfolder]) }}"><i class="fa fa-arrow-left"></i></a></td>
+											<td><i class='fa fa-folder'></i>
+											<a id="golink" href="{{ route('supervisor/documents', ['iddocument' => $current->id_currentfolder]) }}"> ... </a></td>
+											<td></td>
+											<td></td>
+		               				</tr>
+		               				@endif
+                				@endforeach
 								@foreach($folders as $folder)
 										<tr>
-											<td><input type="checkbox" class="flat-red" name="checkbox[]" id="{{ $folder->nama_document}}" value="{{ $folder->id }}"></td>
+											<td><input type="checkbox" name="checkbox[]" id="{{ $folder->nama_document}}" value="{{ $folder->id }}"></td>
 											<td><i class='fa fa-folder'></i>
-											<a id="golink" href="{{ route('supervisor-documents', ['iddocument' => $folder->id]) }}">{{ $folder->nama_document }}</a></td>
-											<td>{{ $folder->owner }}</td></td>
+											<a id="golink" href="{{ route('supervisor/documents', ['iddocument' => $folder->id]) }}">{{ $folder->nama_document }}</a></td>
+											<td>{{ $folder->owner }}</td>
 											<td>{{ $folder->updated_at->format('d/m/Y') }}</td>
 		                </tr>
 								@endforeach
 								@foreach($files as $file)
 										<tr>
-											<td><input type="checkbox" class="flat-red" name="checkbox[]" id="{{ $file->nama_document}}" value="{{ $file->id }}"></td>
+											<td><input type="checkbox" name="checkbox[]" id="{{ $file->nama_document}}" value="{{ $file->id }}"></td>
 											<td><i class='fa fa-file'></i>
-											<a id="golink" href="storage/app/{{$file->path}}" >{{ $file->nama_document }}</a></td>
-											<td>{{ $file->owner }}</td></td>
+											<a id="golink" href="{{url('storage/app/'.$file->path)}}" >{{ $file->nama_document }}</a></td>
+											<td>{{ $file->owner }}</td>
 											<td>{{ $file->updated_at->format('d/m/Y') }}</td>
 		                </tr>
 								@endforeach
@@ -252,5 +348,6 @@
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-        </div>
+     </div>
+ </div>
 @endsection

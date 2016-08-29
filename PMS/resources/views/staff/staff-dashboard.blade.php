@@ -9,12 +9,12 @@
 
 	<div class="box box-info">
 				<div class="box-header with-border">
-					<h3 class="box-title">Status Permohonan</h3>
-
+					<h3 class="box-title">Recent Activities</h3>
+				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
 					<div class="table-responsive">
-						<table class="table no-margin">
+						<table id="doctable3" class="table no-margin">
 							<thead>
 							<tr>
 								<th>No.</th>

@@ -9,6 +9,8 @@ namespace App\Http\Controllers;
 
 use Session;
 use App\Document;
+use App\Activity;
+use App\Clipboard;
 use App\Http\Requests;
 use App\Composer\BreadcrumbComposer;
 use App\Composer\DocumentComposer;
@@ -40,7 +42,7 @@ class DocumentController extends Controller
 
     public function __construct(Request $request, DocumentComposer $document){
         if(empty($request['iddocument'])){
-            $this->data = new BreadcrumbRepository(0);
+            $this->data = new BreadcrumbRepository(1);
             $this->array = $this->data->makebread();
             $breadcrumb = new BreadcrumbComposer($this->array);
             $breadcrumb->compose();
@@ -58,7 +60,7 @@ class DocumentController extends Controller
     public function supervisorfolder(Request $request)
     {
         if(empty($request['iddocument'])){
-          $iddocument = 0;
+          $iddocument = 1;
         }
         else{
           $iddocument = $request['iddocument'];
@@ -79,7 +81,7 @@ class DocumentController extends Controller
     public function adminfolder(Request $request)
     {
         if(empty($request['iddocument'])){
-          $iddocument = 0;
+          $iddocument = 1;
         }
         else{
           $iddocument = $request['iddocument'];
@@ -100,7 +102,7 @@ class DocumentController extends Controller
     public function stafffolder(Request $request)
     {
         if(empty($request['iddocument'])){
-          $iddocument = 0;
+          $iddocument = 1;
         }
         else{
           $iddocument = $request['iddocument'];
@@ -121,7 +123,7 @@ class DocumentController extends Controller
     public function studentfolder(Request $request)
     {
         if(empty($request['iddocument'])){
-          $iddocument = 0;
+          $iddocument = 1;
         }
         else{
           $iddocument = $request['iddocument'];
@@ -167,11 +169,16 @@ class DocumentController extends Controller
         $document->type = "folder";
 
         $document->save();
+
+        $activity = new Activity();
+        $activity->user_session = Session::get('id');
+        $activity->document = $namedocument;
+        $activity->status = "Created";
+
+        $activity->save();
       }
       else {
-        $message = "gagal";
-        echo $message;
-        //return redirect()->back();
+        Session::flash('warning', 'A folder with the same name is already exist');
       }
       //
       return redirect()->back();
@@ -182,12 +189,9 @@ class DocumentController extends Controller
       $iddocument = $request['inputArray'];
       $arrayNamedocument = $request['olddocumentname'];
       $pathcurrentdocument =  $request['currentdocumentpath'];
-
       $arrayId = explode(",", $iddocument);
       $arrayName = explode(",", $arrayNamedocument);
-
       $panjangArray = count($arrayId);
-
       for($i=0; $i<$panjangArray; $i++) {
         $path = $pathcurrentdocument . '/' . $arrayName[$i];
         $isfolder = Document::where('id', $arrayId[$i])
@@ -197,12 +201,27 @@ class DocumentController extends Controller
         if($isfolder){
           Storage::deleteDirectory($path, true);
           Document::where('path', 'LIKE', "$path%" )->delete();
+          $activity = new Activity();
+          $activity->user_session = Session::get('id');
+          $activity->document = $arrayName[$i];
+          $activity->status = "Deleted";
+
+          $activity->save();
         }
         else {
-          Storage::delete($path);
-          Document::where('path', 'LIKE', "$path%" )->delete();
+          $isfile = Document::where('id', $arrayId[$i])->first();
+          $pathfile = $pathcurrentdocument . '/' . $arrayName[$i].'.'.$isfile->extension;
+          Storage::delete($pathfile);
+          Document::where('path', 'LIKE', "$pathfile%" )->delete();
+          $activity = new Activity();
+          $activity->user_session = Session::get('id');
+          $activity->document = $arrayName[$i];
+          $activity->status = "Deleted";
+
+          $activity->save();
         }
       }
+
       return redirect()->back();
     }
 
@@ -218,14 +237,196 @@ class DocumentController extends Controller
       Storage::move($oldpath, $path);
       Document::where('id', $iddocument)->update(['nama_document' => $newdocumentname, 'path' => $path]);
 
-      // echo $path;
-      // echo $oldpath;
+      $activity = new Activity();
+      $activity->user_session = Session::get('id');
+      $activity->document = $olddocumentname;
+      $activity->status = "Modified";
+
+      $activity->save();
+
       return redirect()->back();
     }
 
-    public function moveDocument(Request $request)
+    public function cutDocument(Request $request)
     {
-      # code...
+      $iddocument = $request['inputArray'];
+      $arrayId = explode(",", $iddocument);
+      $panjangArray = count($arrayId);
+
+      Clipboard::where('user_session', Session::get('id'))->delete();
+      for($i=0; $i<$panjangArray; $i++) {
+            $clipboard = new CLipboard();
+
+            $clipboard->user_session = Session::get('id');
+            $clipboard->id_document = $arrayId[$i];
+            $clipboard->status = "cut";
+
+            $clipboard->save();
+          
+        }
+
+      Session::flash('alert', 'Your file/folder successfully copied to clipboard');
+      Session::put('clipboard', 'cut');
+      return redirect()->back();
+    }
+
+    public function copyDocument(Request $request)
+    {
+      $iddocument = $request['inputArray'];
+      $arrayId = explode(",", $iddocument);
+      $panjangArray = count($arrayId);
+
+      Clipboard::where('user_session', Session::get('id'))->delete();
+      for($i=0; $i<$panjangArray; $i++) {
+            $clipboard = new CLipboard();
+
+            $clipboard->user_session = Session::get('id');
+            $clipboard->id_document = $arrayId[$i];
+            $clipboard->status = "copy";
+
+            $clipboard->save();
+          
+        }
+
+      Session::flash('alert', 'Your file/folder successfully copied to clipboard');
+      Session::put('clipboard', 'copy');
+      return redirect()->back();
+    }
+
+    public function pasteDocument(Request $request)
+    {
+      $iddocument = $request['documentid'];
+      $pathcurrentdocument =  $request['currentdocumentpath'];
+      
+      $gets = Clipboard::join('documents', function($join) {
+                     $join->on('clipboards.id_document', '=', 'documents.id')
+                          ->where('clipboards.user_session', '=', Session::get('id'));
+                      })
+                      ->get();
+      /*copy & paste*/
+      if(Session::get('clipboard') == "copy"){
+        foreach ($gets as $get){
+          $folderdest = $pathcurrentdocument.'/'.$get->nama_document;
+          $filedest = $pathcurrentdocument.'/'.$get->nama_document.'.'.$get->extension;
+          if(!Storage::exists($filedest)){
+              $document = new Document();
+
+              $document->nama_document = $get->nama_document;
+              $document->owner = $get->owner;
+              $document->hak_akses = $get->hak_akses;
+              $document->grup_document = $get->grup_document;
+              $document->id_currentfolder = $iddocument;
+              if($get->type == "folder"){
+                $document->path = $pathcurrentdocument.'/'.$get->nama_document.' - Copy';
+              }
+              else{
+                $document->path = $pathcurrentdocument.'/'.$get->nama_document.' - Copy'.'.'.$get->extension;
+              }
+              $document->extension = $get->extension;
+              $document->type = $get->type;
+
+              $document->save();
+
+              if($get->type == "folder"){
+                Storage::copy($get->path, $pathcurrentdocument.'/'.$get->nama_document);
+              }
+              else{ 
+                Storage::copy($get->path, $pathcurrentdocument.'/'.$get->nama_document.'.'.$get->extension);
+              }
+            }
+          else{
+             $document = new Document();
+
+              $document->nama_document = $get->nama_document.' - Copy';
+              $document->owner = $get->owner;
+              $document->hak_akses = $get->hak_akses;
+              $document->grup_document = $get->grup_document;
+              $document->id_currentfolder = $iddocument;
+              if($get->type == "folder"){
+                $document->path = $pathcurrentdocument.'/'.$get->nama_document.' - Copy';
+              }
+              else{
+                $document->path = $pathcurrentdocument.'/'.$get->nama_document.' - Copy'.'.'.$get->extension;
+              }
+              $document->extension = $get->extension;
+              $document->type = $get->type;
+
+              $document->save();
+
+              if($get->type == "folder"){
+                Storage::copy($get->path, $pathcurrentdocument.'/'.$get->nama_document.' - Copy');
+              }
+              else{ 
+                Storage::copy($get->path, $pathcurrentdocument.'/'.$get->nama_document.' - Copy'.'.'.$get->extension);
+              }
+          }
+        }
+      }
+      /*cut & paste*/
+      else{
+        foreach ($gets as $get){
+          $folderdest = $pathcurrentdocument.'/'.$get->nama_document;
+          $filedest = $pathcurrentdocument.'/'.$get->nama_document.'.'.$get->extension;
+          if(!Storage::exists($filedest)){
+              $document = new Document();
+
+              $document->nama_document = $get->nama_document;
+              $document->owner = $get->owner;
+              $document->hak_akses = $get->hak_akses;
+              $document->grup_document = $get->grup_document;
+              $document->id_currentfolder = $iddocument;
+              if($get->type == "folder"){
+                $document->path = $pathcurrentdocument.'/'.$get->nama_document;
+              }
+              else{
+                $document->path = $pathcurrentdocument.'/'.$get->nama_document.'.'.$get->extension;
+              }
+              $document->extension = $get->extension;
+              $document->type = $get->type;
+
+              $document->save();
+
+              if($get->type == "folder"){
+                Storage::move($get->path, $pathcurrentdocument.'/'.$get->nama_document);
+              }
+              else{ 
+                Storage::move($get->path, $pathcurrentdocument.'/'.$get->nama_document.'.'.$get->extension);
+              }
+              Document::where('id', $get->id)->delete();
+            }
+          else{
+             $document = new Document();
+
+              $document->nama_document = $get->nama_document.' - Copy';
+              $document->owner = $get->owner;
+              $document->hak_akses = $get->hak_akses;
+              $document->grup_document = $get->grup_document;
+              $document->id_currentfolder = $iddocument;
+              if($get->type == "folder"){
+                $document->path = $pathcurrentdocument.'/'.$get->nama_document;
+              }
+              else{
+                $document->path = $pathcurrentdocument.'/'.$get->nama_document.'.'.$get->extension;
+              }
+              $document->extension = $get->extension;
+              $document->type = $get->type;
+
+              $document->save();
+
+              if($get->type == "folder"){
+                Storage::move($get->path, $pathcurrentdocument.'/'.$get->nama_document.' - Copy');
+              }
+              else{ 
+                Storage::move($get->path, $pathcurrentdocument.'/'.$get->nama_document.'.'.$get->extension);
+              }
+              Document::where('id', $get->id)->delete();
+          }
+        }
+      }
+
+      Clipboard::where('user_session', Session::get('id'))->delete();
+      Session::forget('clipboard');
+      return redirect()->back();
     }
 
     public function uploadFile(Request $request)
@@ -233,31 +434,178 @@ class DocumentController extends Controller
       if ($request->hasFile('fileupload')){
         $file = $request->file('fileupload');
         $filename = $file->getClientOriginalName();
+        $pathinfo_name = pathinfo($filename, PATHINFO_FILENAME);
+        $pathinfo_ext = pathinfo($filename, PATHINFO_EXTENSION);
         $owner = $request['fileowner'];
         $hakakses = $request['hakakses'];
         $path_currentfolder = $request['currentdocument'];
         $id_currentfolder = $request['id_currentfolder'];
-        // echo $filename;
-        $filePath = $path_currentfolder.'/'.$filename;
-        $upload = Storage::put($filePath, file_get_contents($file->getRealPath()));
-        if ($upload) {
-          $file = new Document();
 
-          $file->nama_document = $filename;
-          $file->owner = $owner;
-          $file->hak_akses = $hakakses;
-          $file->id_currentfolder = $id_currentfolder;
-          $file->type = "file";
-          $file->path = $filePath;
+        $filePath = $path_currentfolder.'/'.$pathinfo_name.'.'.$pathinfo_ext;
+        if(!Storage::exists($filePath)){
+            $upload = Storage::put($filePath, file_get_contents($file->getRealPath()));
+            if ($upload) {
+              $file = new Document();
 
-          $file->save();
+              $file->nama_document = $pathinfo_name;
+              $file->owner = $owner;
+              $file->hak_akses = $hakakses;
+              $file->id_currentfolder = $id_currentfolder;
+              $file->type = "file";
+              $file->path = $filePath;
+              $file->extension = $pathinfo_ext;
 
-          return redirect()->back();
-        }
-        else {
-          echo "Gagal Upload";
-        }
+              $file->save();
+
+              $activity = new Activity();
+              $activity->user_session = Session::get('id');
+              $activity->document = $pathinfo_name;
+              $activity->status = "Uploaded";
+
+              $activity->save();
+
+              return redirect()->back();
+            }
+            else {
+              echo "Gagal Upload";
+            }
+         }
+         else{
+            Session::flash('warning', 'Your uploaded file is already has the same name');
+            return redirect()->back();
+         }
+
       }
       echo "Tidak Ada File";
     }
+
+    public function updateDoc(Request $request)
+    {
+      if ($request->hasFile('updatefile')){
+          $file = $request->file('updatefile');
+          $filename = $file->getClientOriginalName();
+          $pathinfo_name = pathinfo($filename, PATHINFO_FILENAME);
+          $pathinfo_ext = pathinfo($filename, PATHINFO_EXTENSION);
+          $iddocument = $request['inputArray'];
+          $owner = $request['fileowner'];
+          $hakakses = $request['hakakses'];
+          $id_currentfolder = $request['id_currentfolder'];
+          $grupdocument = $request['documentgrup'];
+          $path_currentfolder = $request['currentdocumentpath'];
+          $olddocumentname = $request['olddocumentname'];
+
+          $filepath = Document::where('id', $iddocument)->first();
+
+          $pattern = "/[\\w:\\s]+/";
+          preg_match_all($pattern, $path_currentfolder, $matches);
+          $string = substr($path_currentfolder, 10);
+          $oldpath = $path_currentfolder.'/'.$olddocumentname.'.'.$filepath->extension;
+          $newpath = 'Documents/Dokumen Kadaluarsa/'.$string.'/'.$olddocumentname.'.'.$filepath->extension;
+          Storage::move($oldpath, $newpath);
+          
+
+
+          $expireddoc = Document::where('nama_document', 'Dokumen Kadaluarsa')->first();
+           for($i = 1;$i < count($matches[0]);$i++){
+                    if($i > 1){
+                      $getid = Document::where('nama_document', $matches[0][$i])
+                                         ->where('path', 'LIKE', '%Dokumen Kadaluarsa%')
+                                         ->first();
+
+                          if(empty($getid)){
+                              $prevdoc = Document::where('nama_document', $matches[0][$i-1])
+                                             ->where('path', 'LIKE', '%Dokumen Kadaluarsa%')
+                                             ->first();
+                              $document = new Document();
+
+                              $document->nama_document = $matches[0][$i];
+                              $document->owner = $owner;
+                              $document->hak_akses = $hakakses;
+                              $document->grup_document = $grupdocument;
+                              $document->id_currentfolder = $prevdoc->id;
+                              $document->path = $prevdoc->path.'/'.$matches[0][$i];
+                              $document->type = "folder";
+
+                              $document->save();
+                            }
+
+                    }
+                    else{
+                      $getid = Document::where('nama_document', $matches[0][$i])
+                                         ->where('path', 'LIKE', '%Dokumen Kadaluarsa%')
+                                         ->first();
+                          if(empty($getid)){
+                              $document = new Document();
+
+                              $document->nama_document = $matches[0][1];
+                              $document->owner = $owner;
+                              $document->hak_akses = $hakakses;
+                              $document->grup_document = $grupdocument;
+                              $document->id_currentfolder = $expireddoc->id;
+                              $document->path = 'Documents/Dokumen Kadaluarsa'.'/'.$matches[0][1];
+                              $document->type = "folder";
+
+                              $document->save();
+                            }
+                    }
+                    
+                }
+        $count = count($matches[0]);
+        $get = Document::where('nama_document', $matches[0][$count-1])
+                                     -> where('path', 'LIKE', '%Dokumen Kadaluarsa%')
+                                     ->first();
+        Document::where('id', $iddocument)->update(['id_currentfolder' => $get->id, 'path' => $newpath]);
+        
+        $filePath = $path_currentfolder.'/'.$pathinfo_name.'.'.$pathinfo_ext;
+        Storage::put($filePath, file_get_contents($file->getRealPath()));
+              $file = new Document();
+
+              $file->nama_document = $pathinfo_name;
+              $file->owner = $owner;
+              $file->hak_akses = $hakakses;
+              $file->id_currentfolder = $id_currentfolder;
+              $file->type = "file";
+              $file->path = $filePath;
+              $file->extension = $pathinfo_ext;
+
+              $file->save();
+
+              $activity = new Activity();
+              $activity->user_session = Session::get('id');
+              $activity->document = $pathinfo_name;
+              $activity->status = "Uploaded";
+
+              $activity->save();
+            
+      }
+
+      else{
+        Session::flash('warning', 'No File');
+      }
+      return redirect()->back();
+    } 
 }
+/*if($expireddoc){
+                 
+                
+          }
+        
+          $filePath = $path_currentfolder.'/'.$filename;
+          $upload = Storage::put($filePath, file_get_contents($file->getRealPath()));
+            if ($upload) {
+                $file = new Document();
+
+                $file->nama_document = $filename;
+                $file->owner = $owner;
+                $file->hak_akses = $hakakses;
+                $file->id_currentfolder = $id_currentfolder;
+                $file->type = "file";
+                $file->path = $filePath;
+
+                $file->save();
+
+                return redirect()->back();
+              }
+            else {
+                echo "Gagal Upload";
+              }*/

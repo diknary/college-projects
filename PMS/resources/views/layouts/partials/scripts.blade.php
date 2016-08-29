@@ -1,4 +1,4 @@
-REQUIRED JS SCRIPTS -->
+<!--REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 2.1.4 -->
 <script src="{{ asset('assets/plugins/jQuery/jQuery-2.2.3.min.js') }}"></script>
@@ -15,8 +15,10 @@ REQUIRED JS SCRIPTS -->
 <script src="{{ asset('assets/plugins/iCheck/icheck.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/plugins/filetree/jquery.easing.1.3.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/plugins/filetree/jqueryFileTree.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/js/myscript.js') }}" type="text/javascript"></script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the
